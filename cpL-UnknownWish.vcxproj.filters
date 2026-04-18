@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="res">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="src\cpl">
+      <UniqueIdentifier>{8ff870ee-3868-441a-b1f2-071d7042324e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\world">
+      <UniqueIdentifier>{e5449198-02ad-44e4-8249-6696f4373447}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render">
+      <UniqueIdentifier>{6e9c36b0-0cd5-4e3a-9cf2-047c8fdce14f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\win32">
+      <UniqueIdentifier>{90fdc08d-4f1e-414e-9525-a508845613d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\audio">
+      <UniqueIdentifier>{d1f7c2aa-c5ce-4c59-856d-c227287b43e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\editor">
+      <UniqueIdentifier>{58f1c546-e99a-4ff5-a737-5cb8f929b76b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\game">
+      <UniqueIdentifier>{893967b6-277e-4586-9a1d-c1ced709ccf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\gui">
+      <UniqueIdentifier>{a2e76a0e-eb9b-4890-b144-b7d5e76c4e24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\render\gui\impl">
+      <UniqueIdentifier>{e6c66647-3564-44e1-8538-759a28ffa865}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\cpl.h">
+      <Filter>src\cpl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cplworld.h">
+      <Filter>src\world</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cplthread.h">
+      <Filter>src\cpl</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cplaudio.h">
+      <Filter>src\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cplvid.h">
+      <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ginput.h">
+      <Filter>src\game</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cplgui.h">
+      <Filter>src\render\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cplrez.h">
+      <Filter>src\cpl</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\world.c">
+      <Filter>src\world</Filter>
+    </ClCompile>
+    <ClCompile Include="src\worldrender.c">
+      <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mem.c">
+      <Filter>src\cpl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\win32.c">
+      <Filter>src\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\glvid_etc.c">
+      <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\player.c">
+      <Filter>src\world</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cplthread.cpp">
+      <Filter>src\cpl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\wavfile.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\soundengine.c">
+      <Filter>src\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editor.c">
+      <Filter>src\editor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\glwnd.c">
+      <Filter>src\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cig.c">
+      <Filter>src\cpl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\worldfile.c">
+      <Filter>src\world</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cgui.c">
+      <Filter>src\render\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\guimainmenu.c">
+      <Filter>src\render\gui\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\guigame.c">
+      <Filter>src\render\gui\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\game.c">
+      <Filter>src\cpl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\rezman.c">
+      <Filter>src\cpl</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
