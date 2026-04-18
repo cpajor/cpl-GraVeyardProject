@@ -1,6 +1,5 @@
 # cpL GraVeyard Project
 Game project for studies
-Features:
 - cpL Unknown Wish / CPL2 (game engine)
 - cpL CIG image file format
 - cpL cpLTec system
