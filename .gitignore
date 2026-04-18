@@ -54,8 +54,9 @@ dkms.conf
 *.dwo
  
 /x64
-rez/Y1util
+rez/Y1util/
 rez/y1util.exe
 rez/sound/ffmpeg.exe
 rez/sound/ffplay.exe
 rez/sound/ffprobe.exe
+/.vs
