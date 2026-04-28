@@ -20,7 +20,8 @@ typedef struct y1file_s {
 typedef struct csound_s {
     int samples;
     int sampleRate;
-    short* data;
+    char* data;
+	char channels;
 } csound_t;
 
 typedef struct location_s {
@@ -89,9 +90,9 @@ char cgetBit(char in, char pos);
 char csetBit(char in, char pos, char v);
 
 void* y1get(const char* y1file, const char* internalFile, int* out_filesize);
-
 void y1load(const char* inter);
-
 void y1zero();
+
+
 
 #endif

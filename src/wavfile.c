@@ -28,7 +28,8 @@ csound_t* csnd_load_wav(char* buffer, int size) {
     int sampleRate = 0;
     int bitsPerSample = 0;
     int dataSize = 0;
-    short* audioData = 0;
+    char* audioData = 0;
+    short numChannels = 1; // fix
 
     while (offset < size - 8) {
         char chunkId[5];
@@ -44,6 +45,8 @@ csound_t* csnd_load_wav(char* buffer, int size) {
             short audioFormat = _read_int16(buffer + offset);
             if (audioFormat != 1) return 0; 
 
+            numChannels = _read_int16(buffer + offset + 2);
+
             // idk why works only if theres separeted function XD
             sampleRate = _read_int32(buffer + offset + 4);
             bitsPerSample = _read_int16(buffer + offset + 14);
@@ -58,7 +61,7 @@ csound_t* csnd_load_wav(char* buffer, int size) {
                 dataSize = size - offset;
             }
 
-            audioData = (short*)malloc(dataSize);
+            audioData = (char*)malloc(dataSize);
 
             memcpy(audioData, buffer + offset, dataSize);
 
@@ -88,6 +91,7 @@ csound_t* csnd_load_wav(char* buffer, int size) {
     sound->samples = dataSize;
     sound->sampleRate = sampleRate;
     sound->data = audioData;
+    sound->channels = numChannels;
 
     return sound;
 }

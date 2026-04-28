@@ -3,14 +3,21 @@
 #include "cplaudio.h"
 #include "cplrez.h"
 
-tex_t back1;
+csound_t* cclick1;
+
+void mainmenu_key(char key[11]) {
+	if (key[CKEY_DOWN] || key[CKEY_UP]) {
+		csnd_playsound(cclick1);
+		
+	}
+}
 
 void mainmenu_draw() {
-	cpl_setColor(1, 1, 1, 1);
-	cpl_rTexQuad(back1, 0, 0, 1024, 768);
+	cgui_background();
 }
 
 void mainmenu_init() {
-	back1 = memgett(TEX_MENU_0);
 	cplgui_setIdle(mainmenu_draw);
+	cplgui_setInput(mainmenu_key);
+	cclick1 = memgets(SND_CLICK);
 }

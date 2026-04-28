@@ -32,6 +32,14 @@ extern void keyboard_key(int key, char state); // game.c
 
 extern void cplgui_idle(); // cgui.c
 
+int cpl_rWidth() {
+	return c_wWidth;
+}
+
+int cpl_rHeight() {
+	return c_wHeight;
+}
+
 int cpl_offsetXConChar(char c) {
 	return c % 16;
 }
@@ -47,6 +55,22 @@ int cpl_offsetYConChar(char c) {
 
 void cpl_setColor(float r, float g, float b, float a) {
 	glColor4f(r, g, b, a);
+}
+
+void cpl_rColorQuad(int x, int y, int width, int height) {
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnableClientState(GL_VERTEX_ARRAY);
+	GLfloat v[8] = {
+		x,			y,
+		x,			y + height,
+		x + width,	y + height,
+		x + width,	y
+	};
+	glVertexPointer(2, GL_FLOAT, 0, v);
+	glDrawElements(GL_QUADS, 8, GL_UNSIGNED_BYTE, _cpl_indices);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisable(GL_BLEND);
 }
 
 void cpl_rTexQuadOff(tex_t tex, int x, int y, int width, int height, float ofx, float ofy, float ofstepx, float ofstepy) {
@@ -219,7 +243,7 @@ LONG WINAPI _rnd_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 	unsigned int key = wParam;
 	if (uMsg == WM_KEYDOWN) {
 		//lctrl
-		if (key == VK_LCONTROL) keyboard_key(CKEY_ATTACK, 0);
+		if (key == VK_LCONTROL && !(lParam & (1 << 24))) keyboard_key(CKEY_ATTACK, 0);
 		// alt
 		if (key == VK_MENU) keyboard_key(CKEY_ALT, 0);
 		// spacebar
@@ -237,7 +261,7 @@ LONG WINAPI _rnd_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 	}
 	if (uMsg == WM_KEYUP) {
 		//lctrl
-		if (key == VK_LCONTROL) keyboard_key(CKEY_ATTACK, 1);
+		if (key == VK_LCONTROL && !(lParam & (1 << 24))) keyboard_key(CKEY_ATTACK, 1);
 		// alt
 		if (key == VK_MENU) keyboard_key(CKEY_ALT, 1);
 		// spacebar

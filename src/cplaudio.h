@@ -5,11 +5,11 @@
 csound_t* csnd_load_wav(char* buffer, int size);
 
 /*
+ * 0 - both
  * 1 - right
  * 2 - left
- * 
  */
-void csnd_playsound(const csound_t sound, char mode);
+void csnd_playsound(const csound_t* sound);
 
 csound_t* csnd_Y1();
 

@@ -6,66 +6,77 @@
 #include <stdlib.h>
 #pragma comment(lib, "winmm.lib")
 
-typedef struct wavstr_s {
-    WAVEHDR header;
-    HWAVEOUT hwav; //handle
-} wavstr_t;
+csound_t* _snd_queue[64];
 
-wavstr_t *hWait[64];
-
-void csnd_stop(wavstr_t s) {
-    waveOutUnprepareHeader(s.hwav, &s.header, sizeof(WAVEHDR));
-    waveOutClose(s.hwav);
-}
-
-void csnd_add(wavstr_t s) {
+void csound_init() {
     for (int i = 0; i < 64; i++) {
-        if (hWait[i] == 0) {
-            hWait[i] = &s;
-            return;
-        }
-    } 
-    csnd_stop(s); // sound num overflow
+        _snd_queue[i] = 0;
+    }
 }
 
-void csnd_playsound(const csound_t sn, char mode) {
+DWORD WINAPI csound_async(LPVOID param) {
+    int id = param;
+
+    csound_t* se = _snd_queue[id];
+
     WAVEFORMATEX wfx;
     wfx.wFormatTag = WAVE_FORMAT_PCM;
-    wfx.nChannels = 2;
-    wfx.nSamplesPerSec = sn.sampleRate;
+    wfx.nChannels = se->channels;
+    wfx.nSamplesPerSec = se->sampleRate;
     wfx.wBitsPerSample = 16;
     wfx.nBlockAlign = (wfx.nChannels * wfx.wBitsPerSample) / 8;
     wfx.nAvgBytesPerSec = wfx.nSamplesPerSec * wfx.nBlockAlign;
+    
+    HANDLE hEvent = CreateEventW(0, FALSE, FALSE, 0);
 
     HWAVEOUT hWaveOut;
-    if (waveOutOpen(&hWaveOut, WAVE_MAPPER, &wfx, 0, 0, CALLBACK_NULL) != MMSYSERR_NOERROR) return;
-    
-    short* dat = sn.data;
-    
-    /* TODO STEREO
-    */
+    if (waveOutOpen(&hWaveOut, WAVE_MAPPER, &wfx, (DWORD_PTR)hEvent, 0, CALLBACK_EVENT) != MMSYSERR_NOERROR) {
+        CloseHandle(hEvent);
+        return 0;
+    }
 
     WAVEHDR header;
-    header.lpData = (LPSTR)dat;
-    header.dwBufferLength = sn.samples;
+    ZeroMemory(&header, sizeof(WAVEHDR));
+    header.dwBufferLength = se->samples;
+    header.lpData = malloc(header.dwBufferLength);
+    memcpy(header.lpData, se->data, header.dwBufferLength);
 
     if (waveOutPrepareHeader(hWaveOut, &header, sizeof(WAVEHDR)) != MMSYSERR_NOERROR) {
         waveOutClose(hWaveOut);
-        return;
+        CloseHandle(hEvent);
+        return 0;
     }
 
     waveOutWrite(hWaveOut, &header, sizeof(WAVEHDR));
 
-    csnd_add((wavstr_t){ header, hWaveOut });
+    WaitForSingleObject(hEvent, INFINITE);
+
+    waveOutUnprepareHeader(hWaveOut, &header, sizeof(WAVEHDR));
+
+    free(header.lpData);
+
+    waveOutClose(hWaveOut);
+
+    CloseHandle(hEvent);
+
+    _snd_queue[id] = 0;
+
+    return 0;
 }
 
-void _csnd_thr() {
-    Sleep(50);
-    for (int i = 0; i < 64; i++) {
-        if (hWait[i] != 0) 
-        if (!(hWait[i]->header.dwFlags & WHDR_DONE)) {
-            csnd_stop(*hWait[i]);
-            hWait[i] = 0;
+void csnd_playsound(const csound_t* sn) {
+    int pos = -1;
+    // fixed, direct variable causes crash (XD)
+    for (int i = 0; i < 1; i++) {
+        if (_snd_queue[i] == 0) {
+            pos = i;
+            _snd_queue[i] = sn;
         }
     }
+
+    if (pos < 0) return;
+
+    HANDLE c = CreateThread(NULL, 0, csound_async, pos, 0, NULL);
+    // TODO
+
 }

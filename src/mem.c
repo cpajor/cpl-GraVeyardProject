@@ -194,6 +194,7 @@ y1ret:
 }
 
 void y1zero() {
+	free(y1cbuf);
 	y1cbuf = 0;
 	y1csiz = 0;
 }
