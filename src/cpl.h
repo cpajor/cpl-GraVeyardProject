@@ -3,6 +3,8 @@
 #define CPL_H
 #define _CPL_MEMORY_MAX 512
 
+#define CPLMEM unsigned short
+
 #define REZFILE "REZ.Y1"
 
 typedef struct y1header_s {

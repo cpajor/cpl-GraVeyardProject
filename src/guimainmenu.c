@@ -3,7 +3,7 @@
 #include "cplaudio.h"
 #include "cplrez.h"
 
-csound_t* cclick1;
+CPLMEM cclick1;
 
 void mainmenu_key(char key[11]) {
 	if (key[CKEY_DOWN] || key[CKEY_UP]) {

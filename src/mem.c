@@ -114,6 +114,36 @@ unsigned int memgett(char name[32]) {
 	return 0;
 }
 
+int memgetii(CPLMEM id) {
+	if (id > _CPL_MEMORY_MAX) return 0;
+	return _cpl_memory[id].valueI;
+}
+
+char* memgetic(CPLMEM id) {
+	if (id > _CPL_MEMORY_MAX) return 0;
+	return _cpl_memory[id].valueC;
+}
+
+csound_t* memgetic(CPLMEM id) {
+	if (id > _CPL_MEMORY_MAX) return 0;
+	return _cpl_memory[id].valueS;
+}
+
+unsigned int memgetii(CPLMEM id) {
+	if (id > _CPL_MEMORY_MAX) return 0;
+	return _cpl_memory[id].valueT;
+}
+
+CPLMEM memgetId(char name[32]) {
+	for (int i = 0; i < _CPL_MEMORY_MAX; i++) {
+		mem_t* m = &_cpl_memory[i];
+		if (!strncmp(m->name, name, strlen(m->name))) {
+			return (CPLMEM) i;
+		}
+	}
+	return _CPL_MEMORY_MAX + 1;
+}
+
 void cmemtest() {
 	memsetc("memtests", "cos");
 	memgetc("memtests");

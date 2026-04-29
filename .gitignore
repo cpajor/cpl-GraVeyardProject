@@ -59,4 +59,4 @@ rez/y1util.exe
 rez/sound/ffmpeg.exe
 rez/sound/ffplay.exe
 rez/sound/ffprobe.exe
-/.vs
+.vs

@@ -14,7 +14,7 @@ void csound_init() {
     }
 }
 
-DWORD WINAPI csound_async(LPVOID param) {
+DWORD WINAPI csound_async() {
     int id = param;
 
     csound_t* se = _snd_queue[id];
@@ -65,18 +65,6 @@ DWORD WINAPI csound_async(LPVOID param) {
 }
 
 void csnd_playsound(const csound_t* sn) {
-    int pos = -1;
-    // fixed, direct variable causes crash (XD)
-    for (int i = 0; i < 1; i++) {
-        if (_snd_queue[i] == 0) {
-            pos = i;
-            _snd_queue[i] = sn;
-        }
-    }
-
-    if (pos < 0) return;
-
-    HANDLE c = CreateThread(NULL, 0, csound_async, pos, 0, NULL);
-    // TODO
+    HANDLE c = CreateThread(NULL, 0, csound_async, 0, 0, NULL);
 
 }
