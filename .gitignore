@@ -53,10 +53,14 @@ dkms.conf
 # debug information files
 *.dwo
  
+# MSVC files
+/.vs
 /x64
+*.ipch
+
+# custom
 rez/Y1util/
 rez/y1util.exe
 rez/sound/ffmpeg.exe
 rez/sound/ffplay.exe
 rez/sound/ffprobe.exe
-.vs
