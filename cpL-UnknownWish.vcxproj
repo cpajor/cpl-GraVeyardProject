@@ -43,7 +43,6 @@
     <ClCompile Include="src\rezman.c" />
     <ClCompile Include="src\soundengine.c" />
     <ClCompile Include="src\glvid_etc.c" />
-    <ClCompile Include="src\wavfile.c" />
     <ClCompile Include="src\win32.c" />
     <ClCompile Include="src\world.c" />
     <ClCompile Include="src\worldfile.c" />

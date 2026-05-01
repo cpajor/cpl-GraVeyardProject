@@ -7,7 +7,7 @@ typedef struct mem_s {
 	char name[32];
 	int valueI;
 	char* valueC;
-	csound_t* valueS;
+	//csound_t* valueS;
 	unsigned int valueT;
 } mem_t;
 
@@ -50,6 +50,7 @@ void memsetc(char name[32], char* in) {
 	memsetc(name, in);
 }
 
+/*
 void memsets(char name[32], csound_t* in) {
 	for (int i = 0; i < _CPL_MEMORY_MAX; i++) {
 		mem_t* m = &_cpl_memory[i];
@@ -61,6 +62,7 @@ void memsets(char name[32], csound_t* in) {
 	cmemset(name);
 	memsets(name, in);
 }
+*/
 
 void memsett(char name[32], unsigned int in) {
 	for (int i = 0; i < _CPL_MEMORY_MAX; i++) {
@@ -94,6 +96,7 @@ char* memgetc(char name[32]) {
 	return 0;
 }
 
+/*
 csound_t* memgets(char name[32]) {
 	for (int i = 0; i < _CPL_MEMORY_MAX; i++) {
 		mem_t* m = &_cpl_memory[i];
@@ -103,6 +106,7 @@ csound_t* memgets(char name[32]) {
 	}
 	return 0;
 }
+*/
 
 unsigned int memgett(char name[32]) {
 	for (int i = 0; i < _CPL_MEMORY_MAX; i++) {
@@ -124,10 +128,12 @@ char* memgetic(CPLMEM id) {
 	return _cpl_memory[id].valueC;
 }
 
+/*
 csound_t* memgetis(CPLMEM id) {
 	if (id > _CPL_MEMORY_MAX) return 0;
 	return _cpl_memory[id].valueS;
 }
+*/
 
 unsigned int memgetit(CPLMEM id) {
 	if (id > _CPL_MEMORY_MAX) return 0;
@@ -151,10 +157,10 @@ void cmemtest() {
 
 void _mem_init() {
 	_cpl_memory = malloc((sizeof(mem_t) * _CPL_MEMORY_MAX));
-	_cpl_memory[0] = (mem_t){ "version", 1, 0, 0, 0  };
-	_cpl_memory[1] = (mem_t){ "name", 0, "cp-L", 0, 0};
+	_cpl_memory[0] = (mem_t){ "version", 1, 0, 0  };
+	_cpl_memory[1] = (mem_t){ "name", 0, "cp-L", 0};
 	for (int i = 2; i < _CPL_MEMORY_MAX; i++) {
-		_cpl_memory[i] = (mem_t){ "_", 0, 0, 0, 0 };
+		_cpl_memory[i] = (mem_t){ "_", 0, 0, 0 };
 	}
 	cmemtest();
 	//
@@ -236,7 +242,8 @@ void y1zero() {
 	y1csiz = 0;
 }
 
-void y1load(const char* inter) {
+char* y1load(const char* inter) {
 	y1zero();
 	y1cbuf = y1get(REZFILE, inter, &y1csiz);
+	return y1cbuf;
 }

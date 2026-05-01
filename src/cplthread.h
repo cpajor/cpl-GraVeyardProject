@@ -13,7 +13,7 @@ typedef void (*thr_func_t)(int id);
 
 void cplthr_set(char id, thr_func_t func);
 
-void cplthr_temp(voidfunc_t t);
+void cplasync(voidfunc_t t, params_t par);
 
 #ifdef __cplusplus
 }

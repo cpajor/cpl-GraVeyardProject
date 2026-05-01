@@ -3,8 +3,8 @@
 #include "cpl.h"
 // resources
 
-#define SND_CLICK "SND1"
-#define SND_TITLE "SND2"
+#define SND_CLICK "sound/menu/CLICK.WAV"
+#define SND_TITLE "sound/menu/TITLE.WAV"
 
 #define TEX_MENU_0 "BACK1"
 

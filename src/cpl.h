@@ -7,6 +7,8 @@
 
 #define REZFILE "REZ.Y1"
 
+#define csound char*
+
 typedef struct y1header_s {
     char id[4];
     int offset;
@@ -19,12 +21,6 @@ typedef struct y1file_s {
     int size;
 } y1file_t;
 
-typedef struct csound_s {
-    int samples;
-    int sampleRate;
-    char* data;
-	char channels;
-} csound_t;
 
 typedef struct location_s {
 	double x;
@@ -69,7 +65,7 @@ typedef struct wfile_s {
 } wfile_t;
 
 typedef struct params_s {
-	void** params;
+	CPLMEM* params;
 	unsigned char size;
 } params_t;
 
@@ -86,17 +82,17 @@ typedef void (*cplgui_idle_f)();
 
 void memseti(char name[32], int in);
 void memsetc(char name[32], char* in);
-void memsets(char name[32], csound_t* in);
+//void memsets(char name[32], csound_t* in);
 void memsett(char name[32], unsigned int in);
 int memgeti(char name[32]);
 char* memgetc(char name[32]);
-csound_t* memgets(char name[32]);
+//csound_t* memgets(char name[32]);
 unsigned int memgett(char name[32]);
 //
 CPLMEM memgetId(char name[32]);
 int memgetii(CPLMEM id);
 char* memgetic(CPLMEM id);
-csound_t* memgetis(CPLMEM id);
+//csound memgetis(CPLMEM id);
 unsigned int memgetit(CPLMEM id);
 
 params_t params_empty();
@@ -105,9 +101,7 @@ char cgetBit(char in, char pos);
 char csetBit(char in, char pos, char v);
 
 void* y1get(const char* y1file, const char* internalFile, int* out_filesize);
-void y1load(const char* inter);
+char* y1load(const char* inter);
 void y1zero();
-
-
 
 #endif

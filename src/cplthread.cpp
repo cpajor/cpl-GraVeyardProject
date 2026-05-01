@@ -1,12 +1,9 @@
 #include "cplthread.h"
 
 #include <thread>
-#include <vector>
 
-std::thread __thr[CPL_MAX_THREADS];
 thr_func_t _thr_funcs[CPL_MAX_THREADS];
 char _thr_state = 1;
-std::vector<std::thread> _thr_threadsTemp;
 
 void _thr_idle(int id) {
 	while (_thr_state) {
@@ -23,9 +20,9 @@ void cplthr_exit() {
 	}
 }
 
-void cplthr_detacher() {
-	while (_thr_state) {
-		
+void _thr_temp_idle(voidfunc_t func, params_t par) {
+	if (_thr_state) {
+		func(par);
 	}
 }
 
@@ -34,11 +31,9 @@ void cplthr_init() {
 	for (int i = 0; i < CPL_MAX_THREADS; i++) {
 		_thr_funcs[i] = 0;
 		//
-		__thr[i] = std::thread(_thr_idle, i);
-		__thr[i].detach();
+		std::thread(_thr_idle, i).detach();
 	}
 	std::atexit(cplthr_exit);
-	_thr_threadsTemp.clear();
 }
 
 void cplthr_set(char id, thr_func_t func) {
@@ -47,7 +42,6 @@ void cplthr_set(char id, thr_func_t func) {
 	_thr_funcs[id] = func;
 }
 
-void cplthr_temp(voidfunc_t t) {
-	std::thread thr(t);
-	_thr_threadsTemp.push_back(thr);
+void cplasync(voidfunc_t t, params_t par) {
+	std::thread(_thr_temp_idle, t, par).detach();
 }
