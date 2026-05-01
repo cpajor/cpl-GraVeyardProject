@@ -6,18 +6,14 @@
 #include <stdlib.h>
 #pragma comment(lib, "winmm.lib")
 
-csound_t* _snd_queue[64];
 
 void csound_init() {
-    for (int i = 0; i < 64; i++) {
-        _snd_queue[i] = 0;
-    }
+
 }
 
-DWORD WINAPI csound_async() {
-    int id = param;
+DWORD WINAPI csound_async(int id) {
 
-    csound_t* se = _snd_queue[id];
+    csound_t* se;// = _snd_queue[id];
 
     WAVEFORMATEX wfx;
     wfx.wFormatTag = WAVE_FORMAT_PCM;
@@ -59,12 +55,12 @@ DWORD WINAPI csound_async() {
 
     CloseHandle(hEvent);
 
-    _snd_queue[id] = 0;
+    //_snd_queue[id] = 0;
 
     return 0;
 }
 
 void csnd_playsound(const csound_t* sn) {
-    HANDLE c = CreateThread(NULL, 0, csound_async, 0, 0, NULL);
+    //HANDLE c = CreateThread(NULL, 0, csound_async, 0, 0, NULL);
 
 }

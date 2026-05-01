@@ -124,12 +124,12 @@ char* memgetic(CPLMEM id) {
 	return _cpl_memory[id].valueC;
 }
 
-csound_t* memgetic(CPLMEM id) {
+csound_t* memgetis(CPLMEM id) {
 	if (id > _CPL_MEMORY_MAX) return 0;
 	return _cpl_memory[id].valueS;
 }
 
-unsigned int memgetii(CPLMEM id) {
+unsigned int memgetit(CPLMEM id) {
 	if (id > _CPL_MEMORY_MAX) return 0;
 	return _cpl_memory[id].valueT;
 }
@@ -158,7 +158,14 @@ void _mem_init() {
 	}
 	cmemtest();
 	//
+}
 
+params_t params_empty() {
+	// fixed
+	params_t par;
+	par.size = 0;
+
+	return par;
 }
 
 char cgetBit(char in, char pos) {
@@ -174,7 +181,7 @@ char csetBit(char in, char pos, char v) {
 
 void* y1get(const char* y1file, const char* internalFile, int* out_filesize) {
 	/*
-		to improve - 'goto' is outdated
+		to improve - 'goto' is outdated (if works - do NOT touch it)
 	*/
 	y1header_t header;
 	y1file_t yfile;

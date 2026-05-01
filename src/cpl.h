@@ -68,7 +68,12 @@ typedef struct wfile_s {
 	wscene_t* scenes;
 } wfile_t;
 
-typedef void (*voidfunc_t)();
+typedef struct params_s {
+	void** params;
+	unsigned char size;
+} params_t;
+
+typedef void (*voidfunc_t)(params_t params);
 typedef void (*cplgui_init_f)();
 typedef void (*cplgui_input_f)(char key[11]);
 typedef void (*cplgui_idle_f)();
@@ -87,6 +92,14 @@ int memgeti(char name[32]);
 char* memgetc(char name[32]);
 csound_t* memgets(char name[32]);
 unsigned int memgett(char name[32]);
+//
+CPLMEM memgetId(char name[32]);
+int memgetii(CPLMEM id);
+char* memgetic(CPLMEM id);
+csound_t* memgetis(CPLMEM id);
+unsigned int memgetit(CPLMEM id);
+
+params_t params_empty();
 
 char cgetBit(char in, char pos);
 char csetBit(char in, char pos, char v);
