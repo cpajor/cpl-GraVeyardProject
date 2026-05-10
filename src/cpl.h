@@ -8,15 +8,15 @@
 #define REZFILE "REZ.Y1"
 
 typedef struct y1header_s {
-    char id[4];
-    int offset;
-    int size;
+	char id[4];
+	int offset;
+	int size;
 } y1header_t;
 
 typedef struct y1file_s {
-    char name[56];
-    int offset;
-    int size;
+	char name[56];
+	int offset;
+	int size;
 } y1file_t;
 
 typedef struct location_s {
@@ -50,7 +50,8 @@ typedef struct wheader_s {
 } wheader_t;
 
 typedef struct wchunk_s {
-	wheader_t header;
+	int seed;
+	int edictsize;
 
 	edict_t* edicts;
 } wchunk_t;
@@ -70,21 +71,23 @@ typedef void (*cplgui_idle_f)();
 #endif 
 
 // mem.c
-
+CPLMEM memget(char name[32]);
+//
+int memgetii(CPLMEM id);
+char* memgetci(CPLMEM id);
+unsigned int memgetti(CPLMEM id);
+//
+void memsetti(CPLMEM id, unsigned int in);
+void memsetii(CPLMEM id, int in);
+void memsetci(CPLMEM id, char* in);
+//
 void memseti(char name[32], int in);
 void memsetc(char name[32], char* in);
-//void memsets(char name[32], csound_t* in);
 void memsett(char name[32], unsigned int in);
+//
 int memgeti(char name[32]);
 char* memgetc(char name[32]);
-//csound_t* memgets(char name[32]);
 unsigned int memgett(char name[32]);
-//
-CPLMEM memgetId(char name[32]);
-int memgetii(CPLMEM id);
-char* memgetic(CPLMEM id);
-//csound memgetis(CPLMEM id);
-unsigned int memgetit(CPLMEM id);
 
 params_t params_empty();
 

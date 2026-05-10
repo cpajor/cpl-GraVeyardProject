@@ -27,11 +27,12 @@ int wSeedNext(int in) {
 }
 
 void w_init() {
-
+	currentSeed = wSeedNext(CPL_MAGIC2);
 }
 
 wchunk_t genChunk() {
 	wchunk_t chunk;
+
 
 	return chunk;
 }

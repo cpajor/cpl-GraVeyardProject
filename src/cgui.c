@@ -32,10 +32,14 @@ void cplgui_input(char keys[11]) {
 
 char cg_activepopup = 0;
 
-tex_t cg_back1 = 0;
+CPLMEM cg_back1 = 0;
 
 void cgui_background() {
-	if (cg_back1 == 0) cg_back1 = memgett(TEX_MENU_0);
+	if (cg_back1 == 0) {
+		y1load(TEX_MENU_0);
+		cg_back1 = y1txCIG();
+		memsett("back1", y1txCIG());
+	}
 	if (cg_activepopup) {
 		cpl_setColor(0.67, 0.67, 0.67, 1);
 	}

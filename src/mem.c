@@ -12,7 +12,6 @@ typedef struct mem_s {
 	char name[32];
 	int valueI;
 	char* valueC;
-	//csound_t* valueS;
 	unsigned int valueT;
 } mem_t;
 
@@ -20,17 +19,15 @@ mem_t* _cpl_memory;
 char* y1cbuf;
 int y1csiz;
 
-static char* _y1File;
-static int _y1FileSize;
-
-void cmemset(char name[32]) {
+int cmemset(char name[32]) {
 	for (int i = 0; i < _CPL_MEMORY_MAX; i++) {
 		mem_t* m = &_cpl_memory[i];
 		if (!strcmp("_", m->name)) {
 			strcpy(m->name, name);
-			return;
+			return i;
 		}
 	}
+	return 0;
 }
 
 void memseti(char name[32], int in) {
@@ -56,20 +53,6 @@ void memsetc(char name[32], char* in) {
 	cmemset(name);
 	memsetc(name, in);
 }
-
-/*
-void memsets(char name[32], csound_t* in) {
-	for (int i = 0; i < _CPL_MEMORY_MAX; i++) {
-		mem_t* m = &_cpl_memory[i];
-		if (!strncmp(m->name, name, strlen(m->name))) {
-			m->valueS = in;
-			return;
-		}
-	}
-	cmemset(name);
-	memsets(name, in);
-}
-*/
 
 void memsett(char name[32], unsigned int in) {
 	for (int i = 0; i < _CPL_MEMORY_MAX; i++) {
@@ -103,18 +86,6 @@ char* memgetc(char name[32]) {
 	return 0;
 }
 
-/*
-csound_t* memgets(char name[32]) {
-	for (int i = 0; i < _CPL_MEMORY_MAX; i++) {
-		mem_t* m = &_cpl_memory[i];
-		if (!strncmp(m->name, name, strlen(m->name))) {
-			return m->valueS;
-		}
-	}
-	return 0;
-}
-*/
-
 unsigned int memgett(char name[32]) {
 	for (int i = 0; i < _CPL_MEMORY_MAX; i++) {
 		mem_t* m = &_cpl_memory[i];
@@ -130,50 +101,42 @@ int memgetii(CPLMEM id) {
 	return _cpl_memory[id].valueI;
 }
 
-char* memgetic(CPLMEM id) {
+char* memgetci(CPLMEM id) {
 	if (id > _CPL_MEMORY_MAX) return 0;
 	return _cpl_memory[id].valueC;
 }
 
-/*
-csound_t* memgetis(CPLMEM id) {
-	if (id > _CPL_MEMORY_MAX) return 0;
-	return _cpl_memory[id].valueS;
-}
-*/
-
-unsigned int memgetit(CPLMEM id) {
+unsigned int memgetti(CPLMEM id) {
 	if (id > _CPL_MEMORY_MAX) return 0;
 	return _cpl_memory[id].valueT;
 }
 
-CPLMEM memgetId(char name[32]) {
+void memsetti(CPLMEM id, unsigned int in) {
+	if (id > _CPL_MEMORY_MAX || id == 0) return 0;
+	_cpl_memory[id].valueT = in;
+}
+
+void memsetii(CPLMEM id, int in) {
+	if (id > _CPL_MEMORY_MAX || id == 0) return 0;
+	_cpl_memory[id].valueI = in;
+}
+
+void memsetci(CPLMEM id, char* in) {
+	if (id > _CPL_MEMORY_MAX || id == 0) return 0;
+	_cpl_memory[id].valueC = in;
+}
+
+CPLMEM memget(char name[32]) {
 	for (int i = 0; i < _CPL_MEMORY_MAX; i++) {
 		mem_t* m = &_cpl_memory[i];
 		if (!strncmp(m->name, name, strlen(m->name))) {
 			return (CPLMEM) i;
 		}
 	}
-	return _CPL_MEMORY_MAX + 1;
-}
-
-void cmemtest() {
-	memsetc("memtests", "cos");
-	memgetc("memtests");
+	return 0;
 }
 
 void _mem_init() {
-	FILE* fp = fopen(REZFILE, "rb");
-	if (!fp) return;
-	if (fseek(fp, 0, SEEK_END) != 0) {
-		fclose(fp);
-		return;
-	}
-	_y1FileSize = ftell(fp);
-	_y1File = malloc(sizeof(char) * _y1FileSize);
-	rewind(fp);
-	fread(&_y1File, 1, _y1FileSize, fp);
-	fclose(fp);
 	//
 	_cpl_memory = malloc((sizeof(mem_t) * _CPL_MEMORY_MAX));
 	_cpl_memory[0] = (mem_t){ "version", 1, 0, 0  };
@@ -181,7 +144,6 @@ void _mem_init() {
 	for (int i = 2; i < _CPL_MEMORY_MAX; i++) {
 		_cpl_memory[i] = (mem_t){ "_", 0, 0, 0 };
 	}
-	cmemtest();
 	//
 
 }
@@ -256,7 +218,6 @@ y1ret:
 
 void y1zero() {
 	free(y1cbuf);
-	y1cbuf = 0;
 	y1csiz = 0;
 }
 
