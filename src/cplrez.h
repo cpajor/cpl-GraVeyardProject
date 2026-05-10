@@ -8,7 +8,7 @@
 
 #define TEX_MENU_0 "BACK1"
 
-#define TEX_LEVEL1_0 "level/level1/level1.cig"
+#define TEX_LEVEL1_0 "level/level1.cig"
 
 
 

@@ -85,7 +85,7 @@
     <ClCompile Include="src\player.c">
       <Filter>src\world</Filter>
     </ClCompile>
-    <ClCompile Include="src\soundengine.c">
+    <ClCompile Include="src\csound.c">
       <Filter>src\audio</Filter>
     </ClCompile>
     <ClCompile Include="src\editor.c">

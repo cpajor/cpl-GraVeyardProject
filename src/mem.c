@@ -1,3 +1,8 @@
+/*
+ * cpL-Tec series 1 implementation
+ * github.com/cpajor
+ * 
+ */
 #include "cpl.h"
 #include <stdlib.h>
 #include <string.h>
@@ -12,9 +17,11 @@ typedef struct mem_s {
 } mem_t;
 
 mem_t* _cpl_memory;
-
 char* y1cbuf;
 int y1csiz;
+
+static char* _y1File;
+static int _y1FileSize;
 
 void cmemset(char name[32]) {
 	for (int i = 0; i < _CPL_MEMORY_MAX; i++) {
@@ -156,6 +163,18 @@ void cmemtest() {
 }
 
 void _mem_init() {
+	FILE* fp = fopen(REZFILE, "rb");
+	if (!fp) return;
+	if (fseek(fp, 0, SEEK_END) != 0) {
+		fclose(fp);
+		return;
+	}
+	_y1FileSize = ftell(fp);
+	_y1File = malloc(sizeof(char) * _y1FileSize);
+	rewind(fp);
+	fread(&_y1File, 1, _y1FileSize, fp);
+	fclose(fp);
+	//
 	_cpl_memory = malloc((sizeof(mem_t) * _CPL_MEMORY_MAX));
 	_cpl_memory[0] = (mem_t){ "version", 1, 0, 0  };
 	_cpl_memory[1] = (mem_t){ "name", 0, "cp-L", 0};
@@ -164,6 +183,7 @@ void _mem_init() {
 	}
 	cmemtest();
 	//
+
 }
 
 params_t params_empty() {
@@ -185,14 +205,12 @@ char csetBit(char in, char pos, char v) {
 		return in & ~(1 << pos); 
 }
 
-void* y1get(const char* y1file, const char* internalFile, int* out_filesize) {
-	/*
-		to improve - 'goto' is outdated (if works - do NOT touch it)
-	*/
+void* y1get(const char* internalFile, int* out_filesize) {
+	// to improve - 'goto' is outdated (if works - do NOT touch it)
 	y1header_t header;
 	y1file_t yfile;
 
-	FILE* fp = fopen(y1file, "rb");
+	FILE* fp = fopen(REZFILE, "rb");
 	if (!fp) return 0;
 
 	if (!fread(&header, sizeof(header), 1, fp))
@@ -244,6 +262,6 @@ void y1zero() {
 
 char* y1load(const char* inter) {
 	y1zero();
-	y1cbuf = y1get(REZFILE, inter, &y1csiz);
+	y1cbuf = y1get(inter, &y1csiz);
 	return y1cbuf;
 }

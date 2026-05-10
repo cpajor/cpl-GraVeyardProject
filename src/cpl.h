@@ -7,8 +7,6 @@
 
 #define REZFILE "REZ.Y1"
 
-#define csound char*
-
 typedef struct y1header_s {
     char id[4];
     int offset;
@@ -20,7 +18,6 @@ typedef struct y1file_s {
     int offset;
     int size;
 } y1file_t;
-
 
 typedef struct location_s {
 	double x;
@@ -48,21 +45,15 @@ typedef struct winfo_s {
 
 typedef struct wheader_s {
 	char version;
-
+	int seed;
 	int edictsize;
 } wheader_t;
 
-typedef struct wscene_s {
-	winfo_t info;
+typedef struct wchunk_s {
+	wheader_t header;
 
 	edict_t* edicts;
-} wscene_t;
-
-typedef struct wfile_s {
-	wheader_t header;
-	int scenesize;
-	wscene_t* scenes;
-} wfile_t;
+} wchunk_t;
 
 typedef struct params_s {
 	CPLMEM* params;
@@ -100,7 +91,7 @@ params_t params_empty();
 char cgetBit(char in, char pos);
 char csetBit(char in, char pos, char v);
 
-void* y1get(const char* y1file, const char* internalFile, int* out_filesize);
+void* y1get(const char* internalFile, int* out_filesize);
 char* y1load(const char* inter);
 void y1zero();
 

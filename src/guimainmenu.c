@@ -3,11 +3,11 @@
 #include "cplaudio.h"
 #include "cplrez.h"
 
-csound cclick1;
+csound_t snd;
 
 void mainmenu_key(char key[11]) {
 	if (key[CKEY_DOWN] || key[CKEY_UP]) {
-		csnd_playsound(cclick1);
+		csnd_playsound(snd);
 	}
 }
 
@@ -18,5 +18,6 @@ void mainmenu_draw() {
 void mainmenu_init() {
 	cplgui_setIdle(mainmenu_draw);
 	cplgui_setInput(mainmenu_key);
-	cclick1 = y1load(SND_CLICK);
+	y1load(SND_CLICK);
+	snd = y1csound();
 }
