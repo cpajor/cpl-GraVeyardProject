@@ -29,7 +29,6 @@
 *.dylib
 
 # Executables
-*.exe
 *.out
 *.app
 *.i*86
@@ -60,8 +59,8 @@ dkms.conf
 *.suo
 
 # custom
+build/cpl.exe
 rez/Y1util/
-rez/y1util.exe
 rez/sound/ffmpeg.exe
 rez/sound/ffplay.exe
 rez/sound/ffprobe.exe
