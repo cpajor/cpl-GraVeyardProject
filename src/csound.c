@@ -1,6 +1,7 @@
 #include "cplaudio.h"
 #include "cplthread.h"
 
+#include <stdlib.h>
 #include <Windows.h>
 #include <xaudio2.h>
 #pragma comment(lib, "xaudio2.lib")
@@ -34,14 +35,16 @@ void csnd_init() {
 	CoInitializeEx(0, COINIT_MULTITHREADED);
 
 	hr = XAudio2Create(&g_xaudio, 0, XAUDIO2_DEFAULT_PROCESSOR);
-	if (FAILED(hr)) return;
-
-	hr = g_xaudio->lpVtbl->CreateMasteringVoice(g_xaudio, &g_master, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, 0, 0, AudioCategory_GameEffects);
-
-	SUCCEEDED(hr);
+	if (FAILED(hr)) {
+		// TODO exit(1);
+		return;
+	}
+	hr = g_xaudio->lpVtbl->CreateMasteringVoice(g_xaudio, &g_master, 2, XAUDIO2_DEFAULT_SAMPLERATE, 0, 0, 0, AudioCategory_GameEffects);
 }
 
 void csnd_playsound(csound_t snd) {
+	if (snd.dataSize == 0) return;
+
 	IXAudio2SourceVoice* voice = 0;
 
 	HRESULT hr = g_xaudio->lpVtbl->CreateSourceVoice(g_xaudio, &voice, &snd.wfx, 0, XAUDIO2_DEFAULT_FREQ_RATIO, 0, 0, 0);
