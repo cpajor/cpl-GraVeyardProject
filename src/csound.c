@@ -2,8 +2,6 @@
 #include "cplthread.h"
 
 #include <stdlib.h>
-#include <Windows.h>
-#include <xaudio2.h>
 #pragma comment(lib, "xaudio2.lib")
 
 extern char* y1cbuf;
@@ -39,19 +37,20 @@ void csnd_init() {
 		// TODO exit(1);
 		return;
 	}
-	hr = g_xaudio->lpVtbl->CreateMasteringVoice(g_xaudio, &g_master, 2, XAUDIO2_DEFAULT_SAMPLERATE, 0, 0, 0, AudioCategory_GameEffects);
+	hr = g_xaudio->lpVtbl->CreateMasteringVoice(g_xaudio, &g_master, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, 0, 0, AudioCategory_GameEffects);
 }
 
-void csnd_playsound(csound_t snd) {
+void csnd_playsoundc(csound_t snd, csoundcallback_t* callback) {
 	if (snd.dataSize == 0) return;
 
 	IXAudio2SourceVoice* voice = 0;
 
-	HRESULT hr = g_xaudio->lpVtbl->CreateSourceVoice(g_xaudio, &voice, &snd.wfx, 0, XAUDIO2_DEFAULT_FREQ_RATIO, 0, 0, 0);
+	HRESULT hr = g_xaudio->lpVtbl->CreateSourceVoice(g_xaudio, &voice, &snd.wfx, 2, XAUDIO2_DEFAULT_FREQ_RATIO, 0, 0, 0);
 
 	if (FAILED(hr))
 		return;
 
+	// fix
 	XAUDIO2_BUFFER buf;
 	memset(&buf, 0, sizeof(buf));
 
@@ -61,19 +60,36 @@ void csnd_playsound(csound_t snd) {
 
 	voice->lpVtbl->SubmitSourceBuffer(voice, &buf, 0);
 	voice->lpVtbl->Start(voice, 0, XAUDIO2_COMMIT_NOW);
+
+	if (callback) {
+		*callback = (csoundcallback_t) { voice, snd.type };
+	}
 }
 
-csound_t* csnd_load(unsigned char* buffer, unsigned long long size) { 
+void csnd_playsound(csound_t snd) {
+	csnd_playsoundc(snd, 0);
+}
+
+void csnd_stopsound(csoundcallback_t snd) {
+	if (snd.type < 0) return;
+	if (snd.voice) {
+		snd.voice->lpVtbl->Stop(snd.voice, 0, XAUDIO2_COMMIT_NOW);
+	}
+	snd.type = -1;
+}
+
+csound_t* csnd_load(unsigned char* buffer, size_t size) {
 	// dont remove 'const' / size_t - fix
 	const unsigned char* ptr = buffer;
 	const unsigned char* end = buffer + size;
 
 	// fix 
-	csound_t* snd = malloc(sizeof(csound_t)); 
+	csound_t* snd = malloc(sizeof(csound_t));
 
 	if (size < 12) return 0;
 	if (memcmp(ptr, "RIFF", 4) != 0) return 0;
 	ptr += 8;
+	
 	if (memcmp(ptr, "WAVE", 4) != 0) return 0;
 	ptr += 4;
 
@@ -98,8 +114,9 @@ csound_t* csnd_load(unsigned char* buffer, unsigned long long size) {
 			foundFmt = 1;
 		}
 		if (memcmp(chunkId, "data", 4) == 0) {
-			snd->data = ptr;
 			snd->dataSize = chunkSize;
+			snd->data = malloc(chunkSize);
+			memcpy(snd->data, ptr, chunkSize);
 			foundData = 1;
 		}
 
@@ -113,5 +130,11 @@ csound_t* csnd_load(unsigned char* buffer, unsigned long long size) {
 }
 
 csound_t y1csound() {
-	return *csnd_load(y1cbuf, y1csiz);
+	return y1csoundt(CSOUND_FX);
+}
+
+csound_t y1csoundt(char type) {
+	csound_t c = *csnd_load(y1cbuf, y1csiz);
+	c.type = type;
+	return c;
 }

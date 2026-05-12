@@ -7,6 +7,9 @@
 
 #define REZFILE "REZ.Y1"
 
+//fix
+typedef unsigned __int64 size_t;
+
 typedef struct y1header_s {
 	char id[4];
 	int offset;
