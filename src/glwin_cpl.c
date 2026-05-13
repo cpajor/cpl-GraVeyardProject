@@ -297,6 +297,7 @@ void _rnd_init() {
 	pfd.iPixelType = PFD_TYPE_RGBA;
 	pfd.cColorBits = 24;
 	pfd.cDepthBits = 16;
+	pfd.cStencilBits = 8;
 	pfd.iLayerType = PFD_MAIN_PLANE;
 
 	int pf = ChoosePixelFormat(c_hDC, &pfd);
