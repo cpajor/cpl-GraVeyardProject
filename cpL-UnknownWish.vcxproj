@@ -33,10 +33,11 @@
     <ClCompile Include="src\cplthread.cpp" />
     <ClCompile Include="src\editor.c" />
     <ClCompile Include="src\game.c" />
-    <ClCompile Include="src\glwnd.c" />
+    <ClCompile Include="src\glwin_cpl.c" />
     <ClCompile Include="src\cgui.c" />
     <ClCompile Include="src\guigame.c" />
     <ClCompile Include="src\guimainmenu.c" />
+    <ClCompile Include="src\guistart.c" />
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\mem.c" />
     <ClCompile Include="src\player.c" />

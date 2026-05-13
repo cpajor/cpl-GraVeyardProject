@@ -91,7 +91,7 @@
     <ClCompile Include="src\editor.c">
       <Filter>src\editor</Filter>
     </ClCompile>
-    <ClCompile Include="src\glwnd.c">
+    <ClCompile Include="src\glwin_cpl.c">
       <Filter>src\win32</Filter>
     </ClCompile>
     <ClCompile Include="src\worldfile.c">
@@ -120,6 +120,9 @@
     </ClCompile>
     <ClCompile Include="src\game.c">
       <Filter>src\game</Filter>
+    </ClCompile>
+    <ClCompile Include="src\guistart.c">
+      <Filter>src\render\gui\impl</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

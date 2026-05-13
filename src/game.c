@@ -13,13 +13,13 @@ extern void cplgui_setInit(cplgui_init_f in); //gui.c
 
 extern void rezLoadReg(); // rezman.c
 
-extern void mainmenu_init(); // guimainmenu.c
+extern void startgui_init(); // guistart.c
 
 void StartGame() {
 	_rnd_init();
 	rezLoadReg();
 
-	cplgui_setInit(mainmenu_init);
+	cplgui_setInit(startgui_init);
 	
 	cplgui_init();
 	_rnd_thread();

@@ -47,8 +47,10 @@ void cgui_background() {
 		cpl_setColor(1, 1, 1, 1);
 	}
 	cpl_rTexQuad(cg_back1, 0, 0, cpl_rWidth(), cpl_rHeight());
+	
 }
 
 void cgui_popupBack(int width, int height) {
 	cg_activepopup = 1;
+	// TODO
 }
