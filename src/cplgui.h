@@ -10,5 +10,6 @@ void cplgui_setInput(cplgui_input_f in);
 void cgui_background();
 void cgui_popupBack(int width, int height);
 
+void cplgui_init();
 
 #endif // !CPLGUI_H

@@ -5,6 +5,7 @@
 
 #define CSND_CLICK "sound/menu/CLICK.WAV"
 #define CSND_TITLE "sound/menu/TITLE.WAV"
+#define CSND_MENU "sound/menu/MENU.WAV"
 
 #define TEX_MENU_0 "level/menu/back1.cig"
 

@@ -1,6 +1,9 @@
 #ifndef VID_H
 #define VID_H
 #include "cpl.h"
+#include <windows.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
 
 void txBegin(tex_t tex);
 void txEnd();

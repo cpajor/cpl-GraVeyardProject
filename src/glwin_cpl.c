@@ -1,12 +1,10 @@
 #include "cplvid.h"
 #include "ginput.h"
 
-#include <windows.h>
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <stdlib.h> 
 #pragma comment(lib, "opengl32.lib") 
 #pragma comment(lib, "glu32.lib")
+
+#include <stdlib.h> 
 
 #define DEG2RAD (3.14159F/180.0f)
 

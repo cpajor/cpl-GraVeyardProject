@@ -64,3 +64,4 @@ rez/Y1util/
 rez/sound/ffmpeg.exe
 rez/sound/ffplay.exe
 rez/sound/ffprobe.exe
+/rez/sound
