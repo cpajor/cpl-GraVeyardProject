@@ -17,6 +17,7 @@ void startgui_key(char key[11]) {
 }
 
 void startgui_draw() {
+	/*
 	glClear(GL_STENCIL_BUFFER_BIT);
 
 	glEnable(GL_STENCIL_TEST);
@@ -36,8 +37,9 @@ void startgui_draw() {
 	
 	//
 
-
 	glDisable(GL_STENCIL_TEST);
+	*/
+	
 
 }
 
