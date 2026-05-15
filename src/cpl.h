@@ -4,11 +4,9 @@
 #define _CPL_MEMORY_MAX 512
 
 #define CPLMEM unsigned short
+#define CTICK unsigned __int64
 
 #define REZFILE "REZ.Y1"
-
-//fix
-typedef unsigned __int64 size_t;
 
 typedef struct y1header_s {
 	char id[4];
@@ -40,12 +38,6 @@ typedef struct edict_s {
 	pos_t pos;
 } edict_t;
 
-typedef struct winfo_s {
-	int startx;
-	int starty;
-
-} winfo_t;
-
 typedef struct wheader_s {
 	char version;
 	int seed;
@@ -72,6 +64,9 @@ typedef void (*cplgui_idle_f)();
 #ifndef tex_t
 #define tex_t unsigned int
 #endif 
+
+//fix
+typedef unsigned __int64 size_t;
 
 // mem.c
 CPLMEM memget(char name[32]);
@@ -100,5 +95,8 @@ char csetBit(char in, char pos, char v);
 void* y1get(const char* internalFile, int* out_filesize);
 char* y1load(const char* inter);
 void y1zero();
+
+//
+CTICK cplTicks();
 
 #endif

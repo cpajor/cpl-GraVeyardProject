@@ -318,6 +318,7 @@ void _rnd_destroy() {
 	DestroyWindow(c_hWnd);
 }
 
+// MAIN LOOP
 void _rnd_idle() {
 	MSG msg;
 	while (c_state) {

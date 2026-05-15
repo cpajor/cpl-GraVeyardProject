@@ -8,9 +8,8 @@
 #define CSND_MENU "sound/menu/MENU.WAV"
 
 #define TEX_MENU_0 "level/menu/back1.cig"
+#define TEX_MENU_1 "level/menu/title.cig"
 
 #define TEX_LEVEL1_0 "level/level1.cig"
-
-
 
 #endif
