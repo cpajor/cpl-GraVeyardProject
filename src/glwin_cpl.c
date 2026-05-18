@@ -545,9 +545,9 @@ uchar* cpl_2bitChars_to_image(uchar* bufIn, unsigned int lenght) {
 				ch[j + 3] = 255;
 			}
 			if (n == 2) {
-				ch[j] = 127;
-				ch[j + 1] = 127;
-				ch[j + 2] = 127;
+				ch[j] = 224;
+				ch[j + 1] = 224;
+				ch[j + 2] = 224;
 				ch[j + 3] = 255;
 			}
 			j += 4;

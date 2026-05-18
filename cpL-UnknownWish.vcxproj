@@ -43,7 +43,7 @@
     <ClCompile Include="src\player.c" />
     <ClCompile Include="src\rezman.c" />
     <ClCompile Include="src\csound.c" />
-    <ClCompile Include="src\glvid_etc.c" />
+    <ClCompile Include="src\glwin_etc.c" />
     <ClCompile Include="src\win32.c" />
     <ClCompile Include="src\world.c" />
     <ClCompile Include="src\worldfile.c" />

@@ -8,6 +8,7 @@ cplgui_input_f cgui_input;
 
 void cplgui_setInit(cplgui_init_f in) {
 	cgui_init = in;
+	cpl_inputRepeat(0);
 }
 
 void cplgui_setIdle(cplgui_idle_f in) {

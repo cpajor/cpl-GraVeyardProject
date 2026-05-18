@@ -25,4 +25,10 @@ void cpl_drawConNoColorChar(char c, int x, int y);
 int cpl_rWidth();
 int cpl_rHeight();
 
+#define CPLSPEC_COIN 10
+
+
+// etc
+void cpl_drawSpecial(char type, int x, int y);
+
 #endif // !VID_H

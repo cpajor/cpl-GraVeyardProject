@@ -18,8 +18,8 @@ extern void mainmenu_init(); // guimainmenu.c
 
 void startgui_key(char key[11]) {
 	if (key[CKEY_JUMP]) {
-		if (__frame < 99) {
-			__frame = 99;
+		if (__frame < 90) {
+			__frame = 90;
 		}
 	}
 }
@@ -28,7 +28,7 @@ void startgui_draw() {
 	if (startgui_uptime < 0) {
 		startgui_uptime = cplTicks();
 	}
-	if (startgui_uptime < cplTicks() && __frame < 100) {
+	if (startgui_uptime < cplTicks() && __frame < 90) {
 		startgui_uptime = cplTicks();
 		__frame++;
 	}
@@ -64,7 +64,7 @@ void startgui_draw() {
 
 
 	
-	if (__frame > 99) {
+	if (__frame >= 90) {
 		csnd_stopsound(titl);
 		cplgui_setInit(mainmenu_init);
 		cplgui_init();

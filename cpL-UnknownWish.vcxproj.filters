@@ -79,9 +79,6 @@
     <ClCompile Include="src\win32.c">
       <Filter>src\win32</Filter>
     </ClCompile>
-    <ClCompile Include="src\glvid_etc.c">
-      <Filter>src\render</Filter>
-    </ClCompile>
     <ClCompile Include="src\player.c">
       <Filter>src\world</Filter>
     </ClCompile>
@@ -123,6 +120,9 @@
     </ClCompile>
     <ClCompile Include="src\guistart.c">
       <Filter>src\render\gui\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="src\glwin_etc.c">
+      <Filter>src\win32</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -15,6 +15,7 @@ extern void cplgui_setInit(cplgui_init_f in); //gui.c
 
 extern void rezLoadReg(); // rezman.c
 
+extern void mainmenu_init(); // guimainmenu.c
 extern void startgui_init(); // guistart.c
 
 CTICK _game_uptime = 0;
@@ -40,8 +41,9 @@ void StartGame() {
 	_rnd_init();
 	rezLoadReg();
 
-	cplgui_setInit(startgui_init);
-	
+	//cplgui_setInit(startgui_init);
+	cplgui_setInit(mainmenu_init);
+
 	cplgui_init();
 	cplthr_set(0, _game_thread);
 	_rnd_thread();
@@ -49,6 +51,8 @@ void StartGame() {
 
 
 char _ginput[11];
+CTICK _grepeattick;
+char _grepeat = 0;
 
 // state = 1 -> down, state = 0 -> up
 void keyboard_key(int key, char state) {
@@ -64,5 +68,16 @@ void keyboard_key(int key, char state) {
 
 	}
 
+	if (!_grepeat) {
+		if (!state) {
+			if (_grepeattick >= cplTicks()) return;
+			_grepeattick = cplTicks();
+		}
+		else return;
+	}
 	cplgui_input(_ginput);
+}
+
+void cpl_inputRepeat(char repeating) {
+	_grepeat = repeating;
 }

@@ -21,4 +21,9 @@
 // ENTER key
 #define CKEY_ENTER 10 
 
+/*
+when disabled, allows to press only one key input per tick (100ms)  
+ */
+void cpl_inputRepeat(char repeating);
+
 #endif
