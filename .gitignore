@@ -55,6 +55,7 @@ dkms.conf
 # MSVC files
 /.vs
 /x64
+/editor/x64
 *.ipch
 *.suo
 

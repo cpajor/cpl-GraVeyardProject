@@ -24,9 +24,6 @@
     <Filter Include="src\audio">
       <UniqueIdentifier>{d1f7c2aa-c5ce-4c59-856d-c227287b43e6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\editor">
-      <UniqueIdentifier>{58f1c546-e99a-4ff5-a737-5cb8f929b76b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\game">
       <UniqueIdentifier>{893967b6-277e-4586-9a1d-c1ced709ccf7}</UniqueIdentifier>
     </Filter>
@@ -70,9 +67,6 @@
     <ClCompile Include="src\world.c">
       <Filter>src\world</Filter>
     </ClCompile>
-    <ClCompile Include="src\worldrender.c">
-      <Filter>src\render</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.c">
       <Filter>src</Filter>
     </ClCompile>
@@ -84,9 +78,6 @@
     </ClCompile>
     <ClCompile Include="src\csound.c">
       <Filter>src\audio</Filter>
-    </ClCompile>
-    <ClCompile Include="src\editor.c">
-      <Filter>src\editor</Filter>
     </ClCompile>
     <ClCompile Include="src\glwin_cpl.c">
       <Filter>src\win32</Filter>
@@ -122,6 +113,9 @@
       <Filter>src\render\gui\impl</Filter>
     </ClCompile>
     <ClCompile Include="src\glwin_etc.c">
+      <Filter>src\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="src\glwin_world.c">
       <Filter>src\win32</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,4 +1,4 @@
-#include "cpl.h"
+#include "cplvid.h"
 #include "cplthread.h"
 #include "cplaudio.h"
 #include "ginput.h"
@@ -39,6 +39,7 @@ void _game_thread(int id) {
 
 void StartGame() {
 	_rnd_init();
+	//cpl_fullscreen(1);
 	rezLoadReg();
 
 	//cplgui_setInit(startgui_init);

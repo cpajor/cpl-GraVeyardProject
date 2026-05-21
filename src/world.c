@@ -4,21 +4,13 @@
 #define CPL_MAGIC2 0xBADC0DE
 
 int currentSeed;
-wchunk_t currentScene;
+wchunk_t* currentScene;
 
-location_t wlocation(double x, double y) {
-	return (location_t) { x, y, 0 };
+pos_t wpos(int x, int y) {
+	return (pos_t) { x, y };
 }
 
-location_t wlocationb(pos_t b) {
-	return (location_t) { b.x, b.y, 0 };
-}
-
-pos_t wblockpos(location_t l) {
-	return (pos_t) { l.x, l.y };
-}
-
-char wlocationcmp(pos_t b1, pos_t b2) {
+char wposcmp(pos_t b1, pos_t b2) {
 	return b1.x == b2.x && b1.y == b2.y;
 }
 
@@ -32,13 +24,24 @@ void w_init() {
 
 wchunk_t genChunk() {
 	wchunk_t chunk;
-
+	
+	chunk.edicts[10].type = 0x102;
 
 	return chunk;
 }
 
-edict_t* wgetEdict(pos_t pos) {
+edict_t* wgetEdict(int pos) {
+	// TODO
+	edict_t edic[64];
 
+	for (int i = 0; i < 64; i++) {
+		edic[i] = (edict_t) { 0, 0, 0 };
+		if (i == 0) {
+			edic[i] = (edict_t) { 0x102, 1, 0 };
+		}
+	}
 
-	return 0;
+	//
+
+	return edic;
 }

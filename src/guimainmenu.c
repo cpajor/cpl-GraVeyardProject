@@ -10,6 +10,8 @@ csoundcallback_t titlcall;
 char mainsel = 0;
 char showCredits = 0;
 
+extern void gamegui_init(); // guigame.c
+
 void mainmenu_key(char key[11]) {
 	if (showCredits) {
 		showCredits = 0;
@@ -28,7 +30,9 @@ void mainmenu_key(char key[11]) {
 	if (key[CKEY_ENTER] && !showCredits) {
 		if (mainsel == 0) {
 			csnd_stopsound(titlcall);
-			// TODO game
+			//
+			cplgui_setInit(gamegui_init);
+			cplgui_init();
 		}
 		if (mainsel == 2) {
 			showCredits = 1;
@@ -41,7 +45,7 @@ void mainmenu_key(char key[11]) {
 
 void mainmenu_draw() {
 	cgui_background();
-	int hig = cpl_rHeight() / 3;
+	int hig = cpl_rHeight() / 4;
 	if (showCredits) {
 		glPushMatrix();
 		glScalef(2, 2, 1);
@@ -51,13 +55,13 @@ void mainmenu_draw() {
 
 		glPopMatrix();
 
-		cpl_drawConString("GAME CREATED FOR EDUCATIONAL PURPOSES", 48, 128);
-		cpl_drawConString("RESOURCES FROM CAPTAIN CLAW", 48, 128 + 64);
+		cpl_drawConString("GAME CREATED ONLY FOR EDUCATIONAL PURPOSES", 48, 128);
+		cpl_drawConString("MOST RESOURCES FROM CAPTAIN CLAW", 48, 128 + 64);
 		cpl_drawConString("BY MONOLITH STUDIO (1997)", 48, 128 + 96);
 
 		cpl_drawConString("CODING & PRODUCTION: CPAJOR", 48, 128 + 160);
 		cpl_drawConString("MENTAL SUPPORT: UBER67MATI", 48, 128 + 192);
-		cpl_drawConString("GRAPHICAL EDIT: CPAJOR", 48, 128 + 224);
+		cpl_drawConString("GRAPHICS EDIT: CPAJOR", 48, 128 + 224);
 
 	}
 	else {

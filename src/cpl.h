@@ -20,13 +20,6 @@ typedef struct y1file_s {
 	int size;
 } y1file_t;
 
-typedef struct location_s {
-	double x;
-	double y;
-	// extra
-	double rot;
-} location_t;
-
 typedef struct pos_s {
 	int x;
 	int y;
@@ -34,8 +27,8 @@ typedef struct pos_s {
 
 typedef struct edict_s {
 	int type;
+	int typeBack;
 	char collide;
-	pos_t pos;
 } edict_t;
 
 typedef struct wheader_s {
@@ -46,9 +39,9 @@ typedef struct wheader_s {
 
 typedef struct wchunk_s {
 	int seed;
-	int edictsize;
+	int edictpos;
 
-	edict_t* edicts;
+	edict_t edicts[64];
 } wchunk_t;
 
 typedef struct params_s {

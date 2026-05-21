@@ -31,10 +31,10 @@
   <ItemGroup>
     <ClCompile Include="src\cig.c" />
     <ClCompile Include="src\cplthread.cpp" />
-    <ClCompile Include="src\editor.c" />
     <ClCompile Include="src\game.c" />
     <ClCompile Include="src\glwin_cpl.c" />
     <ClCompile Include="src\cgui.c" />
+    <ClCompile Include="src\glwin_world.c" />
     <ClCompile Include="src\guigame.c" />
     <ClCompile Include="src\guimainmenu.c" />
     <ClCompile Include="src\guistart.c" />
@@ -47,7 +47,6 @@
     <ClCompile Include="src\win32.c" />
     <ClCompile Include="src\world.c" />
     <ClCompile Include="src\worldfile.c" />
-    <ClCompile Include="src\worldrender.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

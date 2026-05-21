@@ -18,9 +18,9 @@ HDC c_hDC;
 HGLRC c_hRC;
 HWND c_hWnd;
 int c_state = 1;
-
-int c_wWidth = 1024;
-int c_wHeight = 768;
+char c_wFullscreen;
+int c_wWidth = 800;
+int c_wHeight = 600;
 
 GLubyte _cpl_indices[8] = { 0,1,2,3,4,5,6,7 };
 
@@ -201,6 +201,16 @@ void txEnd() {
 }
 
 void _setup2d() {
+	if (c_wFullscreen) {
+		glViewport(
+			(GetSystemMetrics(SM_CXSCREEN) - c_wWidth) / 2,
+			(GetSystemMetrics(SM_CYSCREEN) - c_wHeight) / 2,
+			c_wWidth, c_wHeight
+		);
+	}
+	else {
+		glViewport(0, 0, c_wWidth, c_wHeight);
+	}
 	glClearColor(0, 0, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glMatrixMode(GL_PROJECTION);
@@ -224,6 +234,30 @@ void _render() {
 	//r_render();
 	glPopMatrix();
 	SwapBuffers(c_hDC);
+}
+
+void cpl_fullscreen(char fullscr) {
+	c_wFullscreen = fullscr;
+	if (fullscr) {
+		DEVMODE dmScreenSettings;
+		memset(&dmScreenSettings, 0, sizeof(dmScreenSettings));
+		dmScreenSettings.dmSize = sizeof(dmScreenSettings);
+		dmScreenSettings.dmPelsWidth = c_wWidth; 
+		dmScreenSettings.dmPelsHeight = c_wHeight;
+		dmScreenSettings.dmBitsPerPel = 32;
+		dmScreenSettings.dmFields = DM_BITSPERPEL | DM_PELSWIDTH | DM_PELSHEIGHT;
+
+		ChangeDisplaySettings(&dmScreenSettings, CDS_FULLSCREEN);
+		
+		SetWindowLong(c_hWnd, GWL_STYLE, WS_POPUP);
+		SetWindowPos(c_hWnd, HWND_TOPMOST, 0, 0, c_wWidth, c_wHeight, SWP_FRAMECHANGED | SWP_SHOWWINDOW);
+	}
+	else {
+		ChangeDisplaySettings(NULL, 0);
+
+		SetWindowLong(c_hWnd, GWL_STYLE, WS_POPUP);
+		SetWindowPos(c_hWnd, HWND_TOP, GetSystemMetrics(SM_CXSCREEN) / 2 - (c_wWidth / 2), GetSystemMetrics(SM_CYSCREEN) / 2 - (c_wHeight / 2), c_wWidth, c_wHeight, SWP_FRAMECHANGED | SWP_SHOWWINDOW);
+	}
 }
 
 LONG WINAPI _rnd_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
@@ -288,7 +322,11 @@ void _rnd_init() {
 	wc.lpszClassName = L"cpL";
 	RegisterClass(&wc);
 	
-	c_hWnd = CreateWindowExA(0, "cpL", "cpl-Win64", WS_DLGFRAME, 0, 0, c_wWidth, c_wHeight, NULL, NULL, hInstance, NULL);
+	c_hWnd = CreateWindowExA(
+		0, "cpL", "cpl-Win64", WS_POPUP,
+		GetSystemMetrics(SM_CXSCREEN) / 2 - (c_wWidth / 2), GetSystemMetrics(SM_CYSCREEN) / 2 - (c_wHeight / 2), 
+		c_wWidth, c_wHeight, 
+		NULL, NULL, hInstance, NULL);
 
 	c_hDC = GetDC(c_hWnd);
 

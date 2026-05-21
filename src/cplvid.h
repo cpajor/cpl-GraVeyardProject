@@ -25,10 +25,18 @@ void cpl_drawConNoColorChar(char c, int x, int y);
 int cpl_rWidth();
 int cpl_rHeight();
 
-#define CPLSPEC_COIN 10
+void cpl_fullscreen(char fullscr);
 
+// world
+
+void cpl_drawWorld();
 
 // etc
+
+#define CPLSPEC_COIN 10
+
 void cpl_drawSpecial(char type, int x, int y);
+
+void cpl_drawClaw(int x, int y, unsigned short type);
 
 #endif // !VID_H
