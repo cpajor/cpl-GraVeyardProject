@@ -18,22 +18,25 @@
     <Filter Include="src\render">
       <UniqueIdentifier>{adda54d7-3f1b-430b-b9a6-c8bcc4c97e6e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\cpl\mem">
+      <UniqueIdentifier>{78be9048-73dc-453b-9fee-993c65d2fe8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\src\cig.c">
-      <Filter>src\cpl</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\glwin_cpl.c">
       <Filter>src\render</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\glwin_world.c">
-      <Filter>src\render</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\mem.c">
-      <Filter>src\cpl</Filter>
-    </ClCompile>
     <ClCompile Include="editor\editor.c">
       <Filter>src\editor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\mem.c">
+      <Filter>src\cpl\mem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cig.c">
+      <Filter>src\cpl\mem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cplthread.cpp">
+      <Filter>src\cpl\mem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -42,6 +45,9 @@
     </ClInclude>
     <ClInclude Include="..\src\cplvid.h">
       <Filter>src\render</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cplthread.h">
+      <Filter>src\cpl\mem</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

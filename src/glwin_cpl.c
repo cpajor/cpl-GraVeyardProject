@@ -26,7 +26,7 @@ GLubyte _cpl_indices[8] = { 0,1,2,3,4,5,6,7 };
 
 void cpl_initconChars(); // bottom of this file
 
-extern void keyboard_key(int key, char state); // game.c
+extern void keyboard_key(int key, char state); // game.c or editor.c
 
 extern void cplgui_idle(); // cgui.c
 
@@ -230,8 +230,9 @@ void _render() {
 	glPushMatrix();
 	//
 	// TODO
+#ifndef CPL_EDITOR
 	cplgui_idle();
-	//r_render();
+#endif //CPL_EDITOR
 	glPopMatrix();
 	SwapBuffers(c_hDC);
 }

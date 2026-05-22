@@ -130,8 +130,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;CPL_EDITOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\pajor\Desktop\cpp\cpL-UnknownWish\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,13 +143,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\cig.c" />
+    <ClCompile Include="..\src\cplthread.cpp" />
     <ClCompile Include="..\src\glwin_cpl.c" />
-    <ClCompile Include="..\src\glwin_world.c" />
     <ClCompile Include="..\src\mem.c" />
     <ClCompile Include="editor\editor.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpl.h" />
+    <ClInclude Include="..\src\cplthread.h" />
     <ClInclude Include="..\src\cplvid.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
