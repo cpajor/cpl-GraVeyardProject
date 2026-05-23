@@ -36,6 +36,16 @@ extern int y1csiz; // mem.c
 
 extern int txGen(unsigned char* buf, int width, int height); // glwnd.c
 
+cigfile_t cigBlank(int width, int height) {
+	cigfile_t cig;
+	cig.header = (cigheader_t) { CIG_VERSION, width, height, width * height };
+	cig.data = malloc(sizeof(ushort) * width * height);
+	for (int i = 0; i < width * height; i++) {
+		cig.data[i] = 0xFFFF;
+	}
+	return cig;
+}
+
 uchar* cigToImg(cigfile_t in, int* lenght) {
 	uchar* ret = malloc(sizeof(uchar) * ((size_t)in.header.size * 4));
 	
@@ -57,6 +67,18 @@ uchar* cigToImg(cigfile_t in, int* lenght) {
 
 	*lenght = k;
 	return ret;
+}
+
+tex_t txGenBlank(int width, int height) {
+	unsigned int siz = width * height * 4;
+	uchar* img = malloc(siz);
+	for (int i = 0; i < siz; i += 4) {
+		img[i/**/] = 0xFF;
+		img[i + 1] = 0xFF;
+		img[i + 2] = 0xFF;
+		img[i + 3] = 0xFF;
+	}
+	return txGen(img, width, height);
 }
 
 tex_t y1txCIG() {

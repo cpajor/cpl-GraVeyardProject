@@ -1,5 +1,10 @@
 #include "cplvid.h"
+#include "cplthread.h"
+#ifndef CPL_EDITOR
 #include "ginput.h"
+#else
+#include "editor.h"
+#endif
 
 #pragma comment(lib, "opengl32.lib") 
 #pragma comment(lib, "glu32.lib")
@@ -17,7 +22,7 @@ tex_t tex_conChars = 0;
 HDC c_hDC;
 HGLRC c_hRC;
 HWND c_hWnd;
-int c_state = 1;
+char c_state = 1;
 char c_wFullscreen;
 int c_wWidth = 800;
 int c_wHeight = 600;
@@ -34,6 +39,9 @@ extern void cplgui_idle(); // cgui.c
 extern void cpl_drawEdit();
 #endif 
 
+char cplState() {
+	return c_state;
+}
 
 int cpl_rWidth() {
 	return c_wWidth;
@@ -298,6 +306,9 @@ LONG WINAPI _rnd_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 		if (key == VK_DOWN) keyboard_key(CKEY_DOWN, 0);
 		if (key == VK_LEFT) keyboard_key(CKEY_LEFT, 0);
 		if (key == VK_RIGHT) keyboard_key(CKEY_RIGHT, 0);
+#ifdef CPL_EDITOR
+		keyboard_extended(key, 0);
+#endif
 	}
 	if (uMsg == WM_KEYUP) {
 		//lctrl
@@ -317,6 +328,9 @@ LONG WINAPI _rnd_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 		if (key == VK_LEFT) keyboard_key(CKEY_LEFT, 1);
 		if (key == VK_RIGHT) keyboard_key(CKEY_RIGHT, 1);
 	}
+#ifdef CPL_EDITOR
+	keyboard_extended(key, 1);
+#endif
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
 

@@ -27,10 +27,10 @@
     <Filter Include="src\machine">
       <UniqueIdentifier>{90fdc08d-4f1e-414e-9525-a508845613d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\machine\gui">
+    <Filter Include="src\game\gui">
       <UniqueIdentifier>{a2e76a0e-eb9b-4890-b144-b7d5e76c4e24}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\machine\gui\impl">
+    <Filter Include="src\game\gui\impl">
       <UniqueIdentifier>{e6c66647-3564-44e1-8538-759a28ffa865}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -48,7 +48,7 @@
       <Filter>src\game</Filter>
     </ClInclude>
     <ClInclude Include="src\cplgui.h">
-      <Filter>src\machine\gui</Filter>
+      <Filter>src\game\gui</Filter>
     </ClInclude>
     <ClInclude Include="src\cplrez.h">
       <Filter>src\cpl</Filter>
@@ -83,13 +83,13 @@
       <Filter>src\world</Filter>
     </ClCompile>
     <ClCompile Include="src\cgui.c">
-      <Filter>src\machine\gui</Filter>
+      <Filter>src\game\gui</Filter>
     </ClCompile>
     <ClCompile Include="src\guimainmenu.c">
-      <Filter>src\machine\gui\impl</Filter>
+      <Filter>src\game\gui\impl</Filter>
     </ClCompile>
     <ClCompile Include="src\guigame.c">
-      <Filter>src\machine\gui\impl</Filter>
+      <Filter>src\game\gui\impl</Filter>
     </ClCompile>
     <ClCompile Include="src\cig.c">
       <Filter>src\cpl\mem</Filter>
@@ -107,7 +107,7 @@
       <Filter>src\game</Filter>
     </ClCompile>
     <ClCompile Include="src\guistart.c">
-      <Filter>src\machine\gui\impl</Filter>
+      <Filter>src\game\gui\impl</Filter>
     </ClCompile>
     <ClCompile Include="src\glwin_etc.c">
       <Filter>src\machine</Filter>

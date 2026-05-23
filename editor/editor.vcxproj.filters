@@ -24,6 +24,9 @@
     <Filter Include="src\world">
       <UniqueIdentifier>{100c1324-b9ea-4fbc-aa09-ad5567771c35}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\editor\cmd">
+      <UniqueIdentifier>{34f5ad06-9aba-4a8d-b18c-8529af6d05be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\glwin_cpl.c">
@@ -47,6 +50,12 @@
     <ClCompile Include="src\eworld.c">
       <Filter>src\world</Filter>
     </ClCompile>
+    <ClCompile Include="src\eworldfile.c">
+      <Filter>src\world</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editor_cmds.cpp">
+      <Filter>src\editor\cmd</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpl.h">
@@ -63,6 +72,9 @@
     </ClInclude>
     <ClInclude Include="..\src\cplrez.h">
       <Filter>src\world</Filter>
+    </ClInclude>
+    <ClInclude Include="src\editor.h">
+      <Filter>src\editor</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

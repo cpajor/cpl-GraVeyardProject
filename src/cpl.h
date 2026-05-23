@@ -25,22 +25,23 @@ typedef struct pos_s {
 	int y;
 } pos_t;
 
+// edict_t[64] !! ALWAYS 64 !!
 typedef struct edict_s {
 	int type;
 	int typeBack;
 	char collide;
 } edict_t;
 
+typedef struct wchunk_s {
+	pos_t pos;
+	edict_t edicts[256];
+} wchunk_t;
+
 typedef struct wheader_s {
 	char version;
 	int seed;
 	int edictsize;
 } wheader_t;
-
-typedef struct wchunk_s {
-	pos_t pos;
-	edict_t edicts[256];
-} wchunk_t;
 
 typedef struct params_s {
 	CPLMEM* params;
