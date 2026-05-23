@@ -24,13 +24,13 @@
     <Filter Include="src\cpl\mem">
       <UniqueIdentifier>{2cd5a5ac-11a1-4701-90f1-97ec93796c4f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\mac">
+    <Filter Include="src\machine">
       <UniqueIdentifier>{90fdc08d-4f1e-414e-9525-a508845613d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\mac\gui">
+    <Filter Include="src\machine\gui">
       <UniqueIdentifier>{a2e76a0e-eb9b-4890-b144-b7d5e76c4e24}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\mac\gui\impl">
+    <Filter Include="src\machine\gui\impl">
       <UniqueIdentifier>{e6c66647-3564-44e1-8538-759a28ffa865}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -48,7 +48,7 @@
       <Filter>src\game</Filter>
     </ClInclude>
     <ClInclude Include="src\cplgui.h">
-      <Filter>src\mac\gui</Filter>
+      <Filter>src\machine\gui</Filter>
     </ClInclude>
     <ClInclude Include="src\cplrez.h">
       <Filter>src\cpl</Filter>
@@ -57,7 +57,7 @@
       <Filter>src\cpl\mem</Filter>
     </ClInclude>
     <ClInclude Include="src\cplvid.h">
-      <Filter>src\mac</Filter>
+      <Filter>src\machine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -68,7 +68,7 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\win32.c">
-      <Filter>src\mac</Filter>
+      <Filter>src\machine</Filter>
     </ClCompile>
     <ClCompile Include="src\player.c">
       <Filter>src\world</Filter>
@@ -77,19 +77,19 @@
       <Filter>src\audio</Filter>
     </ClCompile>
     <ClCompile Include="src\glwin_cpl.c">
-      <Filter>src\mac</Filter>
+      <Filter>src\machine</Filter>
     </ClCompile>
     <ClCompile Include="src\worldfile.c">
       <Filter>src\world</Filter>
     </ClCompile>
     <ClCompile Include="src\cgui.c">
-      <Filter>src\mac\gui</Filter>
+      <Filter>src\machine\gui</Filter>
     </ClCompile>
     <ClCompile Include="src\guimainmenu.c">
-      <Filter>src\mac\gui\impl</Filter>
+      <Filter>src\machine\gui\impl</Filter>
     </ClCompile>
     <ClCompile Include="src\guigame.c">
-      <Filter>src\mac\gui\impl</Filter>
+      <Filter>src\machine\gui\impl</Filter>
     </ClCompile>
     <ClCompile Include="src\cig.c">
       <Filter>src\cpl\mem</Filter>
@@ -107,13 +107,13 @@
       <Filter>src\game</Filter>
     </ClCompile>
     <ClCompile Include="src\guistart.c">
-      <Filter>src\mac\gui\impl</Filter>
+      <Filter>src\machine\gui\impl</Filter>
     </ClCompile>
     <ClCompile Include="src\glwin_etc.c">
-      <Filter>src\mac</Filter>
+      <Filter>src\machine</Filter>
     </ClCompile>
     <ClCompile Include="src\glwin_world.c">
-      <Filter>src\mac</Filter>
+      <Filter>src\machine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -147,11 +147,15 @@
     <ClCompile Include="..\src\glwin_cpl.c" />
     <ClCompile Include="..\src\mem.c" />
     <ClCompile Include="src\editor.c" />
+    <ClCompile Include="src\eworld.c" />
+    <ClCompile Include="src\glwnd_editor.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpl.h" />
+    <ClInclude Include="..\src\cplrez.h" />
     <ClInclude Include="..\src\cplthread.h" />
     <ClInclude Include="..\src\cplvid.h" />
+    <ClInclude Include="..\src\cplworld.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

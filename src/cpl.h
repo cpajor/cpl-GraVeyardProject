@@ -38,10 +38,8 @@ typedef struct wheader_s {
 } wheader_t;
 
 typedef struct wchunk_s {
-	int seed;
-	int edictpos;
-
-	edict_t edicts[64];
+	pos_t pos;
+	edict_t edicts[256];
 } wchunk_t;
 
 typedef struct params_s {

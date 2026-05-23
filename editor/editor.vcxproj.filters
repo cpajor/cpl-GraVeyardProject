@@ -21,6 +21,9 @@
     <Filter Include="src\cpl\mem">
       <UniqueIdentifier>{78be9048-73dc-453b-9fee-993c65d2fe8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\world">
+      <UniqueIdentifier>{100c1324-b9ea-4fbc-aa09-ad5567771c35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\glwin_cpl.c">
@@ -38,6 +41,12 @@
     <ClCompile Include="src\editor.c">
       <Filter>src\editor</Filter>
     </ClCompile>
+    <ClCompile Include="src\glwnd_editor.c">
+      <Filter>src\render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eworld.c">
+      <Filter>src\world</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpl.h">
@@ -48,6 +57,12 @@
     </ClInclude>
     <ClInclude Include="..\src\cplthread.h">
       <Filter>src\cpl\mem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cplworld.h">
+      <Filter>src\world</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cplrez.h">
+      <Filter>src\world</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -28,7 +28,12 @@ void cpl_initconChars(); // bottom of this file
 
 extern void keyboard_key(int key, char state); // game.c or editor.c
 
+#ifndef CPL_EDITOR
 extern void cplgui_idle(); // cgui.c
+#else
+extern void cpl_drawEdit();
+#endif 
+
 
 int cpl_rWidth() {
 	return c_wWidth;
@@ -233,8 +238,8 @@ void _render() {
 #ifndef CPL_EDITOR
 	cplgui_idle();
 #else
-
-#endif //CPL_EDITOR
+	cpl_drawEdit();
+#endif 
 	glPopMatrix();
 	SwapBuffers(c_hDC);
 }

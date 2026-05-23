@@ -1,5 +1,6 @@
 #include "cplvid.h"
 #include "cplthread.h"
+#include "cplrez.h"
 
 extern int c_state;
 extern void _mem_init(); // mem.c
@@ -31,10 +32,16 @@ void keyboard_key(int key, char state) {
 
 }
 
+void edit_loadRez() {
+	y1load(TEX_LEVEL1_0);
+	memsett("level1_0", y1txCIG());
+}
+
 void edit_start() {
 	_mem_init();
 	cplthr_init();
 	_rnd_init();
+	edit_loadRez();
 
 	cplthr_set(0, _editor_thread);
 	_rnd_thread();
