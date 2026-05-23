@@ -26,9 +26,6 @@
     <ClCompile Include="..\src\glwin_cpl.c">
       <Filter>src\render</Filter>
     </ClCompile>
-    <ClCompile Include="editor\editor.c">
-      <Filter>src\editor</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\mem.c">
       <Filter>src\cpl\mem</Filter>
     </ClCompile>
@@ -37,6 +34,9 @@
     </ClCompile>
     <ClCompile Include="..\src\cplthread.cpp">
       <Filter>src\cpl\mem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editor.c">
+      <Filter>src\editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

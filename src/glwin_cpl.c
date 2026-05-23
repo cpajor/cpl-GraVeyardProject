@@ -232,6 +232,8 @@ void _render() {
 	// TODO
 #ifndef CPL_EDITOR
 	cplgui_idle();
+#else
+
 #endif //CPL_EDITOR
 	glPopMatrix();
 	SwapBuffers(c_hDC);

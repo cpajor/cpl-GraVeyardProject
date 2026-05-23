@@ -146,7 +146,7 @@
     <ClCompile Include="..\src\cplthread.cpp" />
     <ClCompile Include="..\src\glwin_cpl.c" />
     <ClCompile Include="..\src\mem.c" />
-    <ClCompile Include="editor\editor.c" />
+    <ClCompile Include="src\editor.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpl.h" />
