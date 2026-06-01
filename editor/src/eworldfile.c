@@ -1,5 +1,5 @@
 #include "editor.h"
-#include "cpl.h"
+#include "cplworld.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -61,7 +61,12 @@ void cworld_new() {
 	w_chunks = malloc(sizeof(wchunk_t) * w_chunksSize);
 
 	for (int i = 0; i < w_chunksSize; i++) {
-
+		w_chunks[i].pos = wpos(i, 0);
+		for (int j = 0; j < 256; j++) {
+			w_chunks[i].edicts[j].type = 0x102;
+			w_chunks[i].edicts[j].collide = 1;
+			w_chunks[i].edicts[j].typeBack = 0x102;
+		}
 	}
 
 }
