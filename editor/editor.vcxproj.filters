@@ -15,22 +15,19 @@
     <Filter Include="src\editor">
       <UniqueIdentifier>{27dc691b-43d0-4b1c-babe-1a6cd2ff6d78}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\render">
-      <UniqueIdentifier>{adda54d7-3f1b-430b-b9a6-c8bcc4c97e6e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\cpl\mem">
       <UniqueIdentifier>{78be9048-73dc-453b-9fee-993c65d2fe8d}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\world">
       <UniqueIdentifier>{100c1324-b9ea-4fbc-aa09-ad5567771c35}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\editor\cmd">
-      <UniqueIdentifier>{34f5ad06-9aba-4a8d-b18c-8529af6d05be}</UniqueIdentifier>
+    <Filter Include="src\machine">
+      <UniqueIdentifier>{adda54d7-3f1b-430b-b9a6-c8bcc4c97e6e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\glwin_cpl.c">
-      <Filter>src\render</Filter>
+      <Filter>src\machine</Filter>
     </ClCompile>
     <ClCompile Include="..\src\mem.c">
       <Filter>src\cpl\mem</Filter>
@@ -44,17 +41,20 @@
     <ClCompile Include="src\editor.c">
       <Filter>src\editor</Filter>
     </ClCompile>
-    <ClCompile Include="src\glwnd_editor.c">
-      <Filter>src\render</Filter>
+    <ClCompile Include="src\glwin_editor.c">
+      <Filter>src\machine</Filter>
     </ClCompile>
     <ClCompile Include="src\eworld.c">
       <Filter>src\world</Filter>
     </ClCompile>
-    <ClCompile Include="src\eworldfile.c">
-      <Filter>src\world</Filter>
+    <ClCompile Include="src\glwin_editgui.c">
+      <Filter>src\machine</Filter>
     </ClCompile>
-    <ClCompile Include="src\editor_cmds.cpp">
-      <Filter>src\editor\cmd</Filter>
+    <ClCompile Include="src\eworldfile.c">
+      <Filter>src\machine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editor_cmds.c">
+      <Filter>src\editor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -62,7 +62,7 @@
       <Filter>src\cpl</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cplvid.h">
-      <Filter>src\render</Filter>
+      <Filter>src\machine</Filter>
     </ClInclude>
     <ClInclude Include="..\src\cplthread.h">
       <Filter>src\cpl\mem</Filter>

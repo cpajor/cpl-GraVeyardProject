@@ -148,14 +148,6 @@ void _mem_init() {
 
 }
 
-params_t params_empty() {
-	// fixed
-	params_t par;
-	par.size = 0;
-
-	return par;
-}
-
 char cgetBit(char in, char pos) {
 	return (in >> pos) & 1;
 }
@@ -225,4 +217,11 @@ char* y1load(const char* inter) {
 	y1zero();
 	y1cbuf = y1get(inter, &y1csiz);
 	return y1cbuf;
+}
+
+char strnstartswith(const char* str, const char* prefix, int n) {
+	for (int i = 0; i < n; i++) {
+		if (str[i] != prefix[i]) return 1;
+	}
+	return 0;
 }

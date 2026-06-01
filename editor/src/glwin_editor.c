@@ -3,6 +3,13 @@
 #include <stdlib.h> 
 #include <stdio.h>
 
+extern char _cmd_show;
+extern char* _cmd_buf;
+extern char _choosed_gui;
+
+extern edict_t* ewgetEdict(int pos);
+extern void cpl_drawEditGuis(); 
+
 int w_camX = -140;
 int w_camY = 400;
 
@@ -11,31 +18,39 @@ int w_currY = 0;
 pos_t w_curr;
 pos_t w_cur2;
 
-extern edict_t* ewgetEdict(int pos);
-
 void cpl_drawTile(int type, int x, int y) {
 	if (type == 1) {
 		glColor4f(1, 1, 1, 0.25F);
 		cpl_rColorQuad(x - 20, y - 20, 40, 40);
+		return;
 	}
 	if (type == 2) {
 		glColor4f(1, 1, 1, 0.25F);
 
 		cpl_rColorQuad(x + 10, y - 20, 10, 40);
+
+		return;
 	}
 	if (type >= 0x100 && type < 0x200) {
 		glColor3f(1, 1, 1);
 		tex_t tex = memgett("level1_0");
 		if (type < 0x110) {
 			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type & 0xF), 0, 0.1, 0.25);
+
+			
 		}
+		return;
 	}
+
+
+	cpl_setMode(CPLVID_DRAW_LINES);
+	glColor3f(1, 0, 0);
+	cpl_rColorQuad(x - 20, y - 20, 40, 40);
+	cpl_setMode(CPLVID_DRAW_FILL);
 }
 
 void cpl_drawEdit() {
 	char ca[60];
-
-	sprintf(ca, "%i / %i\0", w_currX, w_currY);
 
 	glPushMatrix();
 	glTranslatef(0, w_camY, 0);
@@ -56,12 +71,26 @@ void cpl_drawEdit() {
 	}
 	glPopMatrix();
 
-	cpl_drawConString(ca, 0, 0);
+	if (_choosed_gui == 0) {
+		if (_cmd_show) {
+			sprintf(ca, "%s\0", _cmd_buf);
+			glColor3f(0, 0.75f, 0);
+			cpl_drawConNoColorString("$", 0, 0);
+			cpl_drawConString(ca, 24, 0);
+		}
+		else {
+			sprintf(ca, "%i / %i\0", w_currX, w_currY);
+			cpl_drawConString(ca, 0, 0);
 
-	ZeroMemory(ca, 60);
-	sprintf(ca, "%i / %i\0", w_camX, w_camY);
+			ZeroMemory(ca, 60);
+			sprintf(ca, "%i / %i\0", w_camX, w_camY);
+			cpl_drawConString(ca, 0, 20);
+		}
+	} 
+	else {
 
-	cpl_drawConString(ca, 0, 20);
+	}
+
 }
 
 void cpl_updateView() {

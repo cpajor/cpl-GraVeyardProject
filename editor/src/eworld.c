@@ -4,6 +4,9 @@
 
 int currentSeed;
 
+wchunk_t* w_chunks;
+int w_chunksSize;
+
 pos_t wpos(int x, int y) {
 	return (pos_t) { x, y };
 }

@@ -131,7 +131,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;CPL_EDITOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
+      <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>C:\Users\pajor\Desktop\cpp\cpL-UnknownWish\src;C:\Users\pajor\Desktop\cpp\cpL-UnknownWish\editor\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -147,10 +147,11 @@
     <ClCompile Include="..\src\glwin_cpl.c" />
     <ClCompile Include="..\src\mem.c" />
     <ClCompile Include="src\editor.c" />
-    <ClCompile Include="src\editor_cmds.cpp" />
+    <ClCompile Include="src\editor_cmds.c" />
     <ClCompile Include="src\eworld.c" />
     <ClCompile Include="src\eworldfile.c" />
-    <ClCompile Include="src\glwnd_editor.c" />
+    <ClCompile Include="src\glwin_editgui.c" />
+    <ClCompile Include="src\glwin_editor.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpl.h" />

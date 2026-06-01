@@ -21,8 +21,13 @@
 // ENTER key
 #define CKEY_ENTER 10 
 
+// https://learn.microsoft.com/en-us/windows/win32/inputdev/virtual-key-codes
 void keyboard_extended(unsigned int key, char state);
 
 void cpl_updateView();
+
+void cworld_save();
+void cworld_load();
+void cworld_new();
 
 #endif // !EDITOR_H

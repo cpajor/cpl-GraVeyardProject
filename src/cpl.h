@@ -1,12 +1,29 @@
 #define _CRT_SECURE_NO_WARNINGS
 #ifndef CPL_H
 #define CPL_H
+/*	
+ *  MSVC ONLY (GCC, CLANG, etc. won't work)
+ * 
+ *  SAME AS C++ TRY/CATCH 
+ * 
+ *	EXAMPLE USE
+ *	
+ *	CTRY {
+ *		not 100% sure code
+ *	} CCATCH {
+ *		in exception handling etc.
+ *	}
+ */ 
+#define CTRY __try
+#define CCATCH __except (1)
+//
 #define _CPL_MEMORY_MAX 512
-
 #define CPLMEM unsigned short
 #define CTICK unsigned __int64
 
 #define REZFILE "REZ.Y1"
+
+#define CW_VERSION 3
 
 typedef struct y1header_s {
 	char id[4];
@@ -25,7 +42,6 @@ typedef struct pos_s {
 	int y;
 } pos_t;
 
-// edict_t[64] !! ALWAYS 64 !!
 typedef struct edict_s {
 	int type;
 	int typeBack;
@@ -39,7 +55,6 @@ typedef struct wchunk_s {
 
 typedef struct wheader_s {
 	char version;
-	int seed;
 	int edictsize;
 } wheader_t;
 
@@ -48,7 +63,7 @@ typedef struct params_s {
 	unsigned char size;
 } params_t;
 
-typedef void (*voidfunc_t)(params_t params);
+typedef void (*voidfunc_t)(params_t* params);
 typedef void (*cplgui_init_f)();
 typedef void (*cplgui_input_f)(char key[11]);
 typedef void (*cplgui_idle_f)();
@@ -79,8 +94,6 @@ int memgeti(char name[32]);
 char* memgetc(char name[32]);
 unsigned int memgett(char name[32]);
 
-params_t params_empty();
-
 char cgetBit(char in, char pos);
 char csetBit(char in, char pos, char v);
 
@@ -90,5 +103,7 @@ void y1zero();
 
 //
 CTICK cplTicks();
+
+char strnstartswith(const char* str, const char* prefix, int n);
 
 #endif

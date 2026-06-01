@@ -20,7 +20,7 @@ void cplthr_exit() {
 	}
 }
 
-void _thr_temp_idle(voidfunc_t func, params_t par) {
+void _thr_temp_idle(voidfunc_t func, params_t* par) {
 	if (_thr_state) {
 		func(par);
 	}
@@ -42,6 +42,6 @@ void cplthr_set(char id, thr_func_t func) {
 	_thr_funcs[id] = func;
 }
 
-void cplasync(voidfunc_t t, params_t par) {
+void cplasync(voidfunc_t t, params_t* par) {
 	std::thread(_thr_temp_idle, t, par).detach();
 }

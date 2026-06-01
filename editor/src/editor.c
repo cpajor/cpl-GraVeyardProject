@@ -2,17 +2,24 @@
 #include "cplthread.h"
 #include "cplrez.h"
 #include "editor.h"
+#include <Windows.h>
+#include <string.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 extern pos_t w_curr;
-
 extern int c_state;
 
 extern void _mem_init(); // mem.c
-extern void _rnd_init(); // glwnd.c
-extern void _rnd_thread(); // glwnd.c
+extern void _rnd_init(); // glwin_cpl.c
+extern void _rnd_thread(); // glwin_cpl.c
+extern void cmd_callCmd(char* str); // editor_cmds.c
 
 extern void cplthr_init(); // cpl_thread.cpp
-extern void _editorcmds_thread(int id); // editor_cmds.cpp
+
+char _cmd_show = 0;
+char* _cmd_buf;
+char* _editor_console;
 
 CTICK _game_uptime = 0;
 
@@ -33,7 +40,8 @@ void _editor_thread(int id) {
 	}
 }
 
-void postkeyboard(char key[64]) {
+void postkeyboard(char key[11]) {
+
 	if (key[CKEY_LEFT]) {
 		w_curr.x--;
 
@@ -48,14 +56,15 @@ void postkeyboard(char key[64]) {
 	}
 	if (key[CKEY_DOWN]) {
 		w_curr.y--;
-
 	}
 	cpl_updateView();
 }
 
-char keys[64];
+char keys[11];
 
 void keyboard_key(int key, char state) {
+	if (_cmd_show) return;
+
 	keys[key] = !state;
 	//
 	postkeyboard(keys);
@@ -63,6 +72,38 @@ void keyboard_key(int key, char state) {
 
 void keyboard_extended(unsigned int key, char state) {
 	
+	if (state) return;
+	if (key == VK_OEM_3) { // `
+		_cmd_show = !_cmd_show;
+		return;
+	}
+	if (key == VK_RETURN) {
+		cmd_callCmd(_cmd_buf);
+
+		_cmd_buf[0] = '\0';
+		return;
+	}
+	if (key == VK_BACK) {
+		int c = strlen(_cmd_buf);
+
+		if (c) _cmd_buf[c - 1] = '\0';
+		
+		return;
+	}
+	if (_cmd_show) {
+		if (strlen(_cmd_buf) < 255) {
+			sprintf(_cmd_buf, "%s%c", _cmd_buf, key);
+		} 
+	}
+	if (key == 'S' && keys[CKEY_ATTACK]) { // S
+		cworld_save();
+	}
+	if (key == 'T' && keys[CKEY_ATTACK]) { // T
+		cworld_load();
+	}
+	if (key == VK_TAB) {
+
+	}
 }
 
 void edit_loadRez() {
@@ -76,12 +117,13 @@ void edit_loadRez() {
 
 void edit_start() {
 	_mem_init();
+	_cmd_buf = malloc(sizeof(char) * 256);
+	_cmd_buf[0] = '\0';
 	cplthr_init();
 	_rnd_init();
 	edit_loadRez();
 	
 	//
-	cplthr_set(1, _editorcmds_thread);
 
 	cplthr_set(0, _editor_thread);
 	_rnd_thread();

@@ -42,8 +42,8 @@ void StartGame() {
 	//cpl_fullscreen(1);
 	rezLoadReg();
 
-	//cplgui_setInit(startgui_init);
-	cplgui_setInit(mainmenu_init);
+	cplgui_setInit(startgui_init);
+	//cplgui_setInit(mainmenu_init);
 
 	cplgui_init();
 	cplthr_set(0, _game_thread);

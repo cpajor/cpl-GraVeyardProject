@@ -5,12 +5,16 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+#define CPLVID_DRAW_FILL GL_FILL
+#define CPLVID_DRAW_LINES GL_LINE
+
 void txBegin(tex_t tex);
 void txEnd();
 
 tex_t y1txCIG();
 tex_t txGenBlank(int width, int height);
 
+void cpl_setMode(int mode);
 void cpl_setColor(float r, float g, float b, float a);
 void cpl_rColorQuad(int x, int y, int width, int height);
 void cpl_rTexQuad(tex_t tex, int x, int y, int width, int height);

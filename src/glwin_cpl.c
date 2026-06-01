@@ -22,6 +22,8 @@ tex_t tex_conChars = 0;
 HDC c_hDC;
 HGLRC c_hRC;
 HWND c_hWnd;
+HWND c_2hWnd;
+
 char c_state = 1;
 char c_wFullscreen;
 int c_wWidth = 800;
@@ -37,6 +39,8 @@ extern void keyboard_key(int key, char state); // game.c or editor.c
 extern void cplgui_idle(); // cgui.c
 #else
 extern void cpl_drawEdit();
+
+extern char* _editor_console;
 #endif 
 
 char cplState() {
@@ -66,6 +70,10 @@ int cpl_offsetYConChar(char c) {
 
 void cpl_setColor(float r, float g, float b, float a) {
 	glColor4f(r, g, b, a);
+}
+
+void cpl_setMode(int mode) {
+	glPolygonMode(GL_FRONT_AND_BACK, mode);
 }
 
 void cpl_rColorQuad(int x, int y, int width, int height) {
@@ -175,7 +183,7 @@ void cpl_drawConNoColorStringN(char* c, int x, int y, int N) {
 	int xx = x;
 	for (int i = 0; i < N; i++) {
 		if (c[i] == '\0') return;
-		cpl_drawConChar(c[i], xx, y);
+		cpl_drawConNoColorChar(c[i], xx, y);
 		xx += 16;
 	}
 }
@@ -184,7 +192,7 @@ void cpl_drawConNoColorString(char* c, int x, int y) {
 	int xx = x;
 	for (int i = 0; i < strlen(c); i++) {
 		if (c[i] == '\0') return;
-		cpl_drawConChar(c[i], xx, y);
+		cpl_drawConNoColorChar(c[i], xx, y);
 		xx += 16;
 	}
 }
@@ -235,7 +243,6 @@ void _setup2d() {
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glClear(GL_COLOR_BUFFER_BIT);
 }
 
 void _render() {
@@ -251,6 +258,77 @@ void _render() {
 	glPopMatrix();
 	SwapBuffers(c_hDC);
 }
+#ifdef CPL_EDITOR
+
+BOOL CALLBACK MinimizeAllProc(HWND hwnd, LPARAM lParam) {
+	ShowWindow(hwnd, SW_MINIMIZE);
+	return TRUE;
+}
+
+BOOL CALLBACK RestoreAllProc(HWND hwnd, LPARAM lParam) {
+	ShowWindow(hwnd, SW_RESTORE);
+	return TRUE;
+}
+
+LONG WINAPI _rnd_2WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
+	if (uMsg == WM_SIZE) {
+		if (wParam == SIZE_MINIMIZED) {
+			EnumChildWindows(hWnd, MinimizeAllProc, 0);
+		}
+		if (wParam == SIZE_RESTORED) {
+			EnumChildWindows(hWnd, RestoreAllProc, 0);
+		}
+	}
+	if (uMsg == WM_PAINT) {
+		PAINTSTRUCT ps;
+		HDC hdc = BeginPaint(c_2hWnd, &ps);
+
+		SetBkMode(hdc, TRANSPARENT);
+		SetTextColor(hdc, RGB(255, 255, 255));
+
+		int k = 0;
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 50; j++) {
+				char a = _editor_console[k];
+				TextOutA(hdc, j * 16, i * 16, &a, 1);
+				k++;
+			}
+		}
+
+		EndPaint(c_2hWnd, &ps);
+	}
+	return DefWindowProc(hWnd, uMsg, wParam, lParam);
+}
+
+void _rnd_editor_init() {
+	//
+
+	_editor_console = malloc((9 * 50) + 1);
+
+	int k = 0;
+	for (int i = 0; i < 9 * 50; i++) {
+		_editor_console[k] = ' '; k++;
+	}
+
+	HINSTANCE hInstance = GetModuleHandle(NULL);
+
+	WNDCLASS wc = { 0 };
+	wc.style = CS_OWNDC;
+	wc.lpfnWndProc = _rnd_2WindowProc;
+	wc.hInstance = hInstance;
+	wc.lpszClassName = L"cpLE";
+	RegisterClass(&wc);
+
+	c_2hWnd = CreateWindowExA(
+		0, "cpLE", "cpl-Win64E1", WS_CHILD | WS_POPUP,
+		GetSystemMetrics(SM_CXSCREEN) / 2 - (c_wWidth / 2), GetSystemMetrics(SM_CYSCREEN) / 2 + (c_wHeight / 2),
+		c_wWidth, c_wHeight / 4,
+		NULL, NULL, hInstance, NULL);
+
+	ShowWindow(c_2hWnd, SW_SHOW);
+}
+
+#endif // CPL_EDITOR
 
 void cpl_fullscreen(char fullscr) {
 	c_wFullscreen = fullscr;
@@ -333,7 +411,7 @@ LONG WINAPI _rnd_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 #endif
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
-
+ 
 void _rnd_init() {
 	HINSTANCE hInstance = GetModuleHandle(NULL);
 
@@ -366,8 +444,11 @@ void _rnd_init() {
 	c_hRC = wglCreateContext(c_hDC);
 	wglMakeCurrent(c_hDC, c_hRC);
 
-	ShowWindow(c_hWnd, SW_SHOW);
+#ifdef CPL_EDITOR
+	//_rnd_editor_init();
+#endif // CPL_EDITOR
 
+	ShowWindow(c_hWnd, SW_SHOW);
 	//r_init();
 }
 
