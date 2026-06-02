@@ -367,11 +367,11 @@ LONG WINAPI _rnd_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 		ShowCursor(0);
 	}
 	unsigned int key = wParam;
-	if (uMsg == WM_KEYDOWN) {
+	if (uMsg == WM_KEYDOWN || uMsg == WM_SYSKEYDOWN) {
 		//lctrl
 		if (key == VK_LCONTROL && !(lParam & (1 << 24))) keyboard_key(CKEY_ATTACK, 0);
 		// alt
-		if (key == VK_MENU) keyboard_key(CKEY_ALT, 0);
+		if (GetAsyncKeyState(VK_LMENU) & 0x8000) keyboard_key(CKEY_ALT, 0);
 		// spacebar
 		if (key == VK_SPACE) keyboard_key(CKEY_JUMP, 0);
 		//lshift
@@ -388,11 +388,11 @@ LONG WINAPI _rnd_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 		keyboard_extended(key, 0);
 #endif
 	}
-	if (uMsg == WM_KEYUP) {
+	if (uMsg == WM_KEYUP || uMsg == WM_SYSKEYUP) {
 		//lctrl
 		if (key == VK_LCONTROL && !(lParam & (1 << 24))) keyboard_key(CKEY_ATTACK, 1);
 		// alt
-		if (key == VK_MENU) keyboard_key(CKEY_ALT, 1);
+		if (!(GetAsyncKeyState(VK_LMENU) & 0x8000)) keyboard_key(CKEY_ALT, 1);
 		// spacebar
 		if (key == VK_SPACE) keyboard_key(CKEY_JUMP, 1);
 		//lshift

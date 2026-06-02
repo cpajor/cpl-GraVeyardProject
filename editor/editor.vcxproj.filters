@@ -56,6 +56,9 @@
     <ClCompile Include="src\editor_cmds.c">
       <Filter>src\editor</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\win32.c">
+      <Filter>src\machine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\cpl.h">

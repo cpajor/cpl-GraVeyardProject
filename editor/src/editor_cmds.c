@@ -43,24 +43,24 @@ void cmd_callCmd(char* str) {
 		printf("INFO e_wsize set to: %i\n", memgeti("e_wsize"));
 		return;
 	}
-	if (!strnstartswith(str, "BRUSHSIZE ", 10)) {
-		int len = strlen(str) - 10;
+	if (!strnstartswith(str, "B ", 2)) {
+		int len = strlen(str) - 2;
 		if (len < 1) {
 			return;
 		}
 		int c = 0;
 		CTRY {
-			c = atoi(str + 10);
+			c = atoi(str + 2);
 		}
 		CCATCH {
 			c = 0;
-		}	
-		if (c > 15 || c < 1) {
-			printf("ERR editor_cmds.c / brushsize is wrong (1 - 15)\n");
+		}
+		if (c < 0x100 || c > 0xFFF) {
+			printf("ERR editor_cmds.c / brushtype is wrong (255 - 4095)\n");
 			return;
 		}
-		memseti("e_brushsize", c);
-		printf("INFO brushsize set to: %i\n", memgeti("e_brushsize"));
+		memseti("e_brushtype", c);
+		printf("INFO brushtype set to: %i\n", memgeti("e_brushtype"));
 		return;
 	}
 	if (!strnstartswith(str, "BRUSHTYPE ", 10)) {

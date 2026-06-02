@@ -20,18 +20,12 @@ void cpl_drawEditGuis() {
 }
 
 void applyBrush() {
-	char sz = memgeti("e_brushsize");
 	int type = memgeti("e_brushtype");
-	for (int i = w_currX - sz; i < w_currX + sz; i++) {
-		for (int j = w_currX - sz; j < w_currX + sz; j++) {
-			if (i >= 0 && i < w_chunksSize && j >= 0 && j < 64) {
-				if (w_mode) {
-					w_chunks[i].edicts[j].typeBack = type;
-				}
-				else {
-					w_chunks[i].edicts[j].type = type;
-				}
-			}
-		}
+	if (w_currY < 0 || w_currY >= 64 || w_currX < 0 || w_currX > w_chunksSize - 1) return;
+	if (w_mode) {
+		w_chunks[w_currX].edicts[w_currY].typeBack = type;
+	}
+	else {
+		w_chunks[w_currX].edicts[w_currY].type = type;
 	}
 }

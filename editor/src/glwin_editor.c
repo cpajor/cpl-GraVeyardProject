@@ -34,24 +34,17 @@ void cpl_drawTile(int type, int x, int y) {
 
 		return;
 	}
-	if (type >= 0x100 && type < 0x200) {
-		glColor3f(1, 1, 1);
+	if (type >= 100 && type < 200) {
 		tex_t tex = memgett("level1_0");
-		if (type < 0x11A) {
-			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type & 0xF), 0, 0.1, 0.25);
+		if (type < 111) {
+			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type), 0, 0.1, 0.25);
 			return;
-		}
-		if (type < 0x12A && type > 0x11F) {
-			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type & 0xF), 0, 0.1, 0.25);
+		}	
+		if (type > 110 && type < 121) {
+			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type), 0, 0.1, 0.25);
 			return;
 		}
 	}
-
-
-	cpl_setMode(CPLVID_DRAW_LINES);
-	glColor3f(1, 0, 0);
-	cpl_rColorQuad(x - 20, y - 20, 40, 40);
-	cpl_setMode(CPLVID_DRAW_FILL);
 }
 
 void cpl_drawEdit() {
@@ -66,8 +59,20 @@ void cpl_drawEdit() {
 		if (!ed) continue;
 		for (int j = 0; j < 64; j++) {
 			edict_t e = ed[j];
-			int id = w_mode == 0 ? e.type : e.typeBack;
-			if (id > 0) cpl_drawTile(id, (i * 40) - (w_camX % 40), -j * 40);
+			
+			if (w_mode == 0) {
+				glColor3f(0.7, 0.7, 0.7);
+				if (e.typeBack > 0) cpl_drawTile(e.typeBack, (i * 40) - (w_camX % 40), -j * 40);
+				glColor3f(1, 1, 1);
+				if (e.type > 0) cpl_drawTile(e.type, (i * 40) - (w_camX % 40), -j * 40);
+			}
+			else {
+				glColor3f(0.85, 0.85, 0.85);
+				if (e.typeBack > 0) cpl_drawTile(e.typeBack, (i * 40) - (w_camX % 40), -j * 40);
+				glColor4f(1, 1, 1, 0.5);
+				if (e.type > 0) cpl_drawTile(e.type, (i * 40) - (w_camX % 40), -j * 40);
+			}
+
 			if (i + (w_camX / 40) == w_currX && j == w_currY) {
 				cpl_drawTile(1, (i * 40) - (w_camX % 40), -j * 40);
 			}
@@ -91,19 +96,18 @@ void cpl_drawEdit() {
 			cpl_drawConString(ca, 0, 20);
 
 			ZeroMemory(ca, 60);
-			sprintf(ca, "B-SIZE %i\0", memgeti("e_brushsize"));
-			cpl_drawConString(ca, 0, 580);
-
-			ZeroMemory(ca, 60);
 			sprintf(ca, "B-TYPE %i\0", memgeti("e_brushtype"));
-			cpl_drawConString(ca, 0, 560);
+			cpl_drawConString(ca, 40, 560);
 
 			if (w_mode) {
-				cpl_drawConString("MODE: BACK", 0, 540);
+				cpl_drawConString("MODE: BACK", 40, 580);
 			}
 			else {
-				cpl_drawConString("MODE: FRONT", 0, 540);
+				cpl_drawConString("MODE: FRONT", 40, 580);
 			}
+
+			glColor3f(1, 1, 1);
+			cpl_drawTile(memgeti("e_brushtype"), 20, 580);
 		}
 	} 
 	else {

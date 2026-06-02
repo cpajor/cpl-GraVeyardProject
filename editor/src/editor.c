@@ -16,6 +16,7 @@ extern void _mem_init(); // mem.c
 extern void _rnd_init(); // glwin_cpl.c
 extern void _rnd_thread(); // glwin_cpl.c
 extern void cmd_callCmd(char* str); // editor_cmds.c
+extern void win32c_init();
 
 extern void cplthr_init(); // cpl_thread.cpp
 
@@ -48,20 +49,28 @@ void postkeyboard(char key[11]) {
 		return;
 	}
 	if (key[CKEY_LEFT]) {
+		if (key[CKEY_ALT]) {
+			int c = memgeti("e_brushtype");
+			if (c > 100) memseti("e_brushtype", c - 1);
+			return;
+		}
 		w_curr.x--;
-
 	}
 	if (key[CKEY_RIGHT]) {
+		if (key[CKEY_ALT]) {
+			int c = memgeti("e_brushtype");
+			memseti("e_brushtype", c + 1);
+			return;
+		}
 		w_curr.x++;
-
 	}
 	if (key[CKEY_UP]) {
 		w_curr.y++;
-
 	}
 	if (key[CKEY_DOWN]) {
 		w_curr.y--;
 	}
+	
 	cpl_updateView();
 }
 
@@ -76,7 +85,6 @@ void keyboard_key(int key, char state) {
 }
 
 void keyboard_extended(unsigned int key, char state) {
-	
 	if (state) return;
 	if (key == VK_OEM_3) { // `
 		_cmd_show = !_cmd_show;
@@ -127,8 +135,9 @@ void edit_start() {
 	cplthr_init();
 	_rnd_init();
 	edit_loadRez();
+	win32c_init();
 	
-	memseti("e_brushtype", 0x100);
+	memseti("e_brushtype", 100);
 	//
 
 	cplthr_set(0, _editor_thread);
