@@ -27,15 +27,15 @@ edict_t* enewEdict() {
 	edict_t edic[64];
 
 	for (int i = 0; i < 64; i++) {
-		edic[i] = (edict_t){ 0x100, 0, 0 };
+		edic[i] = (edict_t){ 0x100, 0, 0x100 };
 	}
 
 	return edic;
 }
 
 edict_t* ewgetEdict(int pos) {
-	
 	if (pos < 0) return 0;
-
-	return enewEdict();
+	if (pos > w_chunksSize - 1) return 0;
+	//
+	return w_chunks[pos].edicts;
 }

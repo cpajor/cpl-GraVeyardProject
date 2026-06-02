@@ -24,6 +24,7 @@
 #define REZFILE "REZ.Y1"
 
 #define CW_VERSION 3
+#define CW_MAXCHUNKS 2048
 
 typedef struct y1header_s {
 	char id[4];
@@ -50,7 +51,7 @@ typedef struct edict_s {
 
 typedef struct wchunk_s {
 	pos_t pos;
-	edict_t edicts[256];
+	edict_t edicts[64];
 } wchunk_t;
 
 typedef struct wheader_s {

@@ -62,10 +62,10 @@ void cworld_new() {
 
 	for (int i = 0; i < w_chunksSize; i++) {
 		w_chunks[i].pos = wpos(i, 0);
-		for (int j = 0; j < 256; j++) {
-			w_chunks[i].edicts[j].type = 0x102;
+		for (int j = 0; j < 64; j++) {
+			w_chunks[i].edicts[j].type = 0x100;
 			w_chunks[i].edicts[j].collide = 1;
-			w_chunks[i].edicts[j].typeBack = 0x102;
+			w_chunks[i].edicts[j].typeBack = 0x100;
 		}
 	}
 

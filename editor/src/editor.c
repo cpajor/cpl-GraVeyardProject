@@ -9,7 +9,9 @@
 
 extern pos_t w_curr;
 extern int c_state;
+extern char w_mode;
 
+extern void applyBrush();
 extern void _mem_init(); // mem.c
 extern void _rnd_init(); // glwin_cpl.c
 extern void _rnd_thread(); // glwin_cpl.c
@@ -41,7 +43,10 @@ void _editor_thread(int id) {
 }
 
 void postkeyboard(char key[11]) {
-
+	if (key[CKEY_JUMP]) {
+		applyBrush();
+		return;
+	}
 	if (key[CKEY_LEFT]) {
 		w_curr.x--;
 
@@ -79,8 +84,8 @@ void keyboard_extended(unsigned int key, char state) {
 	}
 	if (key == VK_RETURN) {
 		cmd_callCmd(_cmd_buf);
-
 		_cmd_buf[0] = '\0';
+		_cmd_show = 0;
 		return;
 	}
 	if (key == VK_BACK) {
@@ -102,7 +107,7 @@ void keyboard_extended(unsigned int key, char state) {
 		cworld_load();
 	}
 	if (key == VK_TAB) {
-
+		w_mode = !w_mode;
 	}
 }
 
@@ -123,6 +128,7 @@ void edit_start() {
 	_rnd_init();
 	edit_loadRez();
 	
+	memseti("e_brushtype", 0x100);
 	//
 
 	cplthr_set(0, _editor_thread);
