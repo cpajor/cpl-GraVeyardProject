@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="res">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="src\cpl">
+      <UniqueIdentifier>{d6fedbc4-99ee-4517-950d-676d839ab51c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\editor">
+      <UniqueIdentifier>{27dc691b-43d0-4b1c-babe-1a6cd2ff6d78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\cpl\mem">
+      <UniqueIdentifier>{78be9048-73dc-453b-9fee-993c65d2fe8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\world">
+      <UniqueIdentifier>{100c1324-b9ea-4fbc-aa09-ad5567771c35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\machine">
+      <UniqueIdentifier>{adda54d7-3f1b-430b-b9a6-c8bcc4c97e6e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\glwin_cpl.c">
+      <Filter>src\machine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\mem.c">
+      <Filter>src\cpl\mem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cig.c">
+      <Filter>src\cpl\mem</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cplthread.cpp">
+      <Filter>src\cpl\mem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editor.c">
+      <Filter>src\editor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\glwin_editor.c">
+      <Filter>src\machine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eworld.c">
+      <Filter>src\world</Filter>
+    </ClCompile>
+    <ClCompile Include="src\glwin_editgui.c">
+      <Filter>src\machine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eworldfile.c">
+      <Filter>src\machine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\editor_cmds.c">
+      <Filter>src\editor</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\cpl.h">
+      <Filter>src\cpl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cplvid.h">
+      <Filter>src\machine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cplthread.h">
+      <Filter>src\cpl\mem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cplworld.h">
+      <Filter>src\world</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\cplrez.h">
+      <Filter>src\world</Filter>
+    </ClInclude>
+    <ClInclude Include="src\editor.h">
+      <Filter>src\editor</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

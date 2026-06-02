@@ -23,13 +23,11 @@
 *.lo
 
 # Shared objects (inc. Windows DLLs)
-*.dll
 *.so
 *.so.*
 *.dylib
 
 # Executables
-*.exe
 *.out
 *.app
 *.i*86
@@ -56,12 +54,15 @@ dkms.conf
 # MSVC files
 /.vs
 /x64
+/editor/x64
 *.ipch
 *.suo
 
 # custom
+build/*.dll
+build/cpl.exe
 rez/Y1util/
-rez/y1util.exe
 rez/sound/ffmpeg.exe
 rez/sound/ffplay.exe
 rez/sound/ffprobe.exe
+/rez/sound

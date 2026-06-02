@@ -1,37 +1,41 @@
 #define _CRT_SECURE_NO_WARNINGS
 #ifndef CPL_H
 #define CPL_H
+/*	
+ *  MSVC ONLY (GCC, CLANG, etc. won't work)
+ * 
+ *  SAME AS C++ TRY/CATCH 
+ * 
+ *	EXAMPLE USE
+ *	
+ *	CTRY {
+ *		not 100% sure code
+ *	} CCATCH {
+ *		in exception handling etc.
+ *	}
+ */ 
+#define CTRY __try
+#define CCATCH __except (1)
+//
 #define _CPL_MEMORY_MAX 512
-
 #define CPLMEM unsigned short
+#define CTICK unsigned __int64
 
 #define REZFILE "REZ.Y1"
 
+#define CW_VERSION 3
+
 typedef struct y1header_s {
-    char id[4];
-    int offset;
-    int size;
+	char id[4];
+	int offset;
+	int size;
 } y1header_t;
 
 typedef struct y1file_s {
-    char name[56];
-    int offset;
-    int size;
+	char name[56];
+	int offset;
+	int size;
 } y1file_t;
-
-typedef struct csound_s {
-    int samples;
-    int sampleRate;
-    char* data;
-	char channels;
-} csound_t;
-
-typedef struct location_s {
-	double x;
-	double y;
-	// extra
-	double rot;
-} location_t;
 
 typedef struct pos_s {
 	int x;
@@ -40,35 +44,26 @@ typedef struct pos_s {
 
 typedef struct edict_s {
 	int type;
+	int typeBack;
 	char collide;
-	pos_t pos;
 } edict_t;
 
-typedef struct winfo_s {
-	int startx;
-	int starty;
-
-} winfo_t;
+typedef struct wchunk_s {
+	pos_t pos;
+	edict_t edicts[256];
+} wchunk_t;
 
 typedef struct wheader_s {
 	char version;
-
 	int edictsize;
 } wheader_t;
 
-typedef struct wscene_s {
-	winfo_t info;
+typedef struct params_s {
+	CPLMEM* params;
+	unsigned char size;
+} params_t;
 
-	edict_t* edicts;
-} wscene_t;
-
-typedef struct wfile_s {
-	wheader_t header;
-	int scenesize;
-	wscene_t* scenes;
-} wfile_t;
-
-typedef void (*voidfunc_t)();
+typedef void (*voidfunc_t)(params_t* params);
 typedef void (*cplgui_init_f)();
 typedef void (*cplgui_input_f)(char key[11]);
 typedef void (*cplgui_idle_f)();
@@ -77,24 +72,38 @@ typedef void (*cplgui_idle_f)();
 #define tex_t unsigned int
 #endif 
 
-// mem.c
+//fix
+typedef unsigned __int64 size_t;
 
+// mem.c
+CPLMEM memget(char name[32]);
+//
+int memgetii(CPLMEM id);
+char* memgetci(CPLMEM id);
+unsigned int memgetti(CPLMEM id);
+//
+void memsetti(CPLMEM id, unsigned int in);
+void memsetii(CPLMEM id, int in);
+void memsetci(CPLMEM id, char* in);
+//
 void memseti(char name[32], int in);
 void memsetc(char name[32], char* in);
-void memsets(char name[32], csound_t* in);
 void memsett(char name[32], unsigned int in);
+//
 int memgeti(char name[32]);
 char* memgetc(char name[32]);
-csound_t* memgets(char name[32]);
 unsigned int memgett(char name[32]);
 
 char cgetBit(char in, char pos);
 char csetBit(char in, char pos, char v);
 
-void* y1get(const char* y1file, const char* internalFile, int* out_filesize);
-void y1load(const char* inter);
+void* y1get(const char* internalFile, int* out_filesize);
+char* y1load(const char* inter);
 void y1zero();
 
+//
+CTICK cplTicks();
 
+char strnstartswith(const char* str, const char* prefix, int n);
 
 #endif

@@ -1,31 +1,38 @@
-#include "cpl.h"
 #include "cplworld.h"
+#define CPL_MAGIC1 0xBADA55
+#define CPL_MAGIC2 0xBADC0DE
 
-int currentSceneId;
-wscene_t currentScene;
+int currentSeed;
+wchunk_t* currentScene;
 
-location_t wlocation(double x, double y) {
-	return (location_t) { x, y, 0 };
+pos_t wpos(int x, int y) {
+	return (pos_t) { x, y };
 }
 
-location_t wlocationb(pos_t b) {
-	return (location_t) { b.x, b.y, 0 };
-}
-
-pos_t wblockpos(location_t l) {
-	return (pos_t) { l.x, l.y };
-}
-
-char wlocationcmp(pos_t b1, pos_t b2) {
+char wposcmp(pos_t b1, pos_t b2) {
 	return b1.x == b2.x && b1.y == b2.y;
 }
 
-void w_init() {
-
+int wSeedNext(int in) {
+	return (in * 11) % CPL_MAGIC1;
 }
 
-edict_t* wgetEdict(pos_t pos) {
+void w_init() {
+	currentSeed = wSeedNext(CPL_MAGIC2);
+}
 
+edict_t* wgetEdict(int pos) {
+	// TODO
+	edict_t edic[64];
 
-	return 0;
+	for (int i = 0; i < 64; i++) {
+		edic[i] = (edict_t) { 0, 0, 0 };
+		if (i == 0) {
+			edic[i] = (edict_t) { 0x102, 1, 0 };
+		}
+	}
+
+	//
+
+	return edic;
 }

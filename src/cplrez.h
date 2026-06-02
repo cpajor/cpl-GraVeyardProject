@@ -3,13 +3,14 @@
 #include "cpl.h"
 // resources
 
-#define SND_CLICK "SND1"
-#define SND_TITLE "SND2"
+#define CSND_SEL "sound/menu/select.wav"
+#define CSND_CLICK "sound/menu/click.wav"
+#define CSND_TITLE "sound/menu/title.wav"
+#define CSND_MENU "sound/menu/menu.wav"
 
-#define TEX_MENU_0 "BACK1"
+#define TEX_MENU_0 "level/menu/back1.cig"
+#define TEX_MENU_1 "level/menu/title.cig"
 
-#define TEX_LEVEL1_0 "level/level1/level1.cig"
-
-
+#define TEX_LEVEL1_0 "level/level1.cig"
 
 #endif
