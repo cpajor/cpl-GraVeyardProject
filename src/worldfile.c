@@ -5,7 +5,9 @@
 #include <string.h>
 
 extern wchunk_t* w_chunks;
-extern int w_chunksSize;
+extern size_t w_chunksSize;
+extern int w_palette;
+extern char** w_visible;
 
 void cworld_load(char* wname) {
 	FILE* fp = fopen(wname, "rb");
@@ -18,6 +20,8 @@ void cworld_load(char* wname) {
 	fread(&header, sizeof(wheader_t), 1, fp);
 
 	w_chunksSize = header.edictsize;
+	
+	w_palette = header.palette;
 
 	w_chunks = malloc(sizeof(wchunk_t) * w_chunksSize);
 

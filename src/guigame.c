@@ -10,19 +10,24 @@
 extern int w_camX;
 extern int w_camY;
 
+extern void player_updateView();
+
 void gamegui_key(char key[11]) {
 	if (key[CKEY_LEFT]) {
 		w_camX -= 10;
+		player_updateView();
 	}
 	if (key[CKEY_RIGHT]) {
 		w_camX += 10;
+		player_updateView();
 	}
-
 	if (key[CKEY_UP]) {
 		w_camY += 10;
+		player_updateView();
 	}
 	if (key[CKEY_DOWN]) {
 		w_camY -= 10;
+		player_updateView();
 	}
 }
 

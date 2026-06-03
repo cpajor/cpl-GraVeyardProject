@@ -6,9 +6,8 @@
 extern char _cmd_show;
 extern char* _cmd_buf;
 extern char _choosed_gui;
-
-extern int w_chunksSize;
-
+extern pos_t w_start;
+extern size_t w_chunksSize;
 extern edict_t* ewgetEdict(int pos);
 extern void cpl_drawEditGuis(); 
 
@@ -22,6 +21,13 @@ pos_t w_curr;
 pos_t w_cur2;
 
 void cpl_drawTile(int type, int x, int y) {
+	if (type == 0) {
+		glColor4f(0, 1, 1, 0.25);
+
+		cpl_rColorQuad(x - 20, y - 20, 40, 40);
+
+		return;
+	}
 	if (type == 1) {
 		glColor4f(1, 1, 1, 0.25F);
 		cpl_rColorQuad(x - 20, y - 20, 40, 40);
@@ -34,6 +40,20 @@ void cpl_drawTile(int type, int x, int y) {
 
 		return;
 	}
+	if (type == 3) { // no collide flag
+		glColor4f(0, 1, 1, 0.25F);
+
+		cpl_rColorQuad(x + 10, y - 20, 10, 40);
+
+		return;
+	}
+	if (type == 99) { // start
+		glColor4f(0, 1, 0, 0.5F);
+
+		cpl_rColorQuad(x + 10, y - 20, 10, 40);
+
+		return;
+	}
 	if (type >= 100 && type < 200) {
 		tex_t tex = memgett("level1_0");
 		if (type < 111) {
@@ -41,9 +61,23 @@ void cpl_drawTile(int type, int x, int y) {
 			return;
 		}	
 		if (type > 110 && type < 121) {
-			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type), 0, 0.1, 0.25);
+			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type), 0.25, 0.1, 0.25);
 			return;
 		}
+		if (type > 120 && type < 131) {
+			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type), 0.5, 0.1, 0.25);
+			return;
+		}
+		if (type > 130 && type < 141) {
+			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type), 0.75, 0.1, 0.25);
+			return;
+		}
+	}
+	if (type > 900) {
+		glPushMatrix();
+		glScalef(2.5, 2.5, 1);
+		cpl_drawConChar(type - 900, x - 20, y - 20);
+		glPopMatrix();
 	}
 }
 
@@ -60,21 +94,32 @@ void cpl_drawEdit() {
 		for (int j = 0; j < 64; j++) {
 			edict_t e = ed[j];
 			
+			int x = (i * 40) - (w_camX % 40);
+			int y = -j * 40;
+
 			if (w_mode == 0) {
 				glColor3f(0.7, 0.7, 0.7);
-				if (e.typeBack > 0) cpl_drawTile(e.typeBack, (i * 40) - (w_camX % 40), -j * 40);
+				if (e.typeBack > 0) cpl_drawTile(e.typeBack, x, y);
 				glColor3f(1, 1, 1);
-				if (e.type > 0) cpl_drawTile(e.type, (i * 40) - (w_camX % 40), -j * 40);
+				if (e.type >= 0) cpl_drawTile(e.type, x, y);
 			}
 			else {
 				glColor3f(0.85, 0.85, 0.85);
-				if (e.typeBack > 0) cpl_drawTile(e.typeBack, (i * 40) - (w_camX % 40), -j * 40);
+				if (e.typeBack > 0) cpl_drawTile(e.typeBack, x, y);
 				glColor4f(1, 1, 1, 0.5);
-				if (e.type > 0) cpl_drawTile(e.type, (i * 40) - (w_camX % 40), -j * 40);
+				if (e.type > 0) cpl_drawTile(e.type, x, y);
+			}
+
+			if (!e.collide) {
+				cpl_drawTile(3, x, y);
 			}
 
 			if (i + (w_camX / 40) == w_currX && j == w_currY) {
-				cpl_drawTile(1, (i * 40) - (w_camX % 40), -j * 40);
+				cpl_drawTile(1, x, y);
+			}
+
+			if (i + (w_camX / 40) == w_start.x && j == w_start.y) {
+				cpl_drawTile(99, x, y);
 			}
 		}
 	}
@@ -96,6 +141,9 @@ void cpl_drawEdit() {
 			cpl_drawConString(ca, 0, 20);
 
 			ZeroMemory(ca, 60);
+			if (memgeti("e_brushtype") == 0) {
+				sprintf(ca, "B-TYPE [AIR]\0");
+			} else
 			sprintf(ca, "B-TYPE %i\0", memgeti("e_brushtype"));
 			cpl_drawConString(ca, 40, 560);
 
@@ -132,7 +180,5 @@ void cpl_updateView() {
 	if (abs(xdelta) > 8) {
 		w_camX += (xdelta > 0 ? 40 : -40);
 	}
-
-
 
 }

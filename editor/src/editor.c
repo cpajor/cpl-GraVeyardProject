@@ -45,6 +45,7 @@ void _editor_thread(int id) {
 }
 
 void postkeyboard(char key[11]) {
+	cpl_updateView();
 	if (key[CKEY_JUMP]) {
 		applyBrush();
 		return;
@@ -52,7 +53,12 @@ void postkeyboard(char key[11]) {
 	if (key[CKEY_LEFT]) {
 		if (key[CKEY_ALT]) {
 			int c = memgeti("e_brushtype");
-			if (c > 100) memseti("e_brushtype", c - 1);
+			if (c > 99) {
+				memseti("e_brushtype", c - 1);
+			}
+			if (c < 100) {
+				memseti("e_brushtype", 0);
+			}
 
 			return;
 		}
@@ -61,6 +67,9 @@ void postkeyboard(char key[11]) {
 	if (key[CKEY_RIGHT]) {
 		if (key[CKEY_ALT]) {
 			int c = memgeti("e_brushtype");
+			if (c < 98) {
+				c = 98;
+			}
 			memseti("e_brushtype", c + 1);
 
 			return;
@@ -73,8 +82,6 @@ void postkeyboard(char key[11]) {
 	if (key[CKEY_DOWN]) {
 		w_curr.y--;
 	}
-	
-	cpl_updateView();
 }
 
 char keys[11];
@@ -141,7 +148,11 @@ void edit_start() {
 	win32c_init();
 	
 	memseti("e_brushtype", 100);
+	memseti("e_wsize", 256);
+	memseti("e_wpalette", 1);
+	memsetc("e_wname", "NEWWORLD");
 	//
+	cworld_new();
 
 	cplthr_set(0, _editor_thread);
 	_rnd_thread();

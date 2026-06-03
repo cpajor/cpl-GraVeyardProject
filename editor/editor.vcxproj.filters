@@ -50,14 +50,14 @@
     <ClCompile Include="src\glwin_editgui.c">
       <Filter>src\machine</Filter>
     </ClCompile>
-    <ClCompile Include="src\eworldfile.c">
-      <Filter>src\machine</Filter>
-    </ClCompile>
     <ClCompile Include="src\editor_cmds.c">
       <Filter>src\editor</Filter>
     </ClCompile>
     <ClCompile Include="..\src\win32.c">
       <Filter>src\machine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eworldfile.c">
+      <Filter>src\world</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

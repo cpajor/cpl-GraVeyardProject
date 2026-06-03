@@ -43,20 +43,38 @@ void cmd_callCmd(char* str) {
 		printf("INFO e_wsize set to: %i\n", memgeti("e_wsize"));
 		return;
 	}
+	if (!strnstartswith(str, "PALETTE ", 8)) {
+		int len = strlen(str) - 8;
+		if (len < 1) {
+			return;
+		}
+		int c = -1;
+		CTRY{
+			c = atoi(str + 8);
+		}
+		CCATCH{ c = -1;  }
+		if (c < 0) {
+			printf("ERR editor_cmds.c / worldpalette is wrong (0 is min, [4byte signed])\n");
+			return;
+		}
+		memseti("e_wpalette", c);
+		printf("INFO e_wpalette set to: %i\n", memgeti("e_wpalette"));
+		return;
+	}
 	if (!strnstartswith(str, "B ", 2)) {
 		int len = strlen(str) - 2;
 		if (len < 1) {
 			return;
 		}
-		int c = 0;
+		int c = -1;
 		CTRY {
 			c = atoi(str + 2);
 		}
 		CCATCH {
-			c = 0;
+			c = -1;
 		}
-		if (c < 0x100 || c > 0xFFF) {
-			printf("ERR editor_cmds.c / brushtype is wrong (255 - 4095)\n");
+		if (c < 0 || c > 0xFFF) {
+			printf("ERR editor_cmds.c / brushtype is wrong (0 - 4095)\n");
 			return;
 		}
 		memseti("e_brushtype", c);
@@ -68,15 +86,15 @@ void cmd_callCmd(char* str) {
 		if (len < 1) {
 			return;
 		}
-		int c = 0;
+		int c = -1;
 		CTRY {
 			c = atoi(str + 10);
 		}
 		CCATCH {
-			c = 0;
+			c = -1;
 		}
-		if (c < 0x100 || c > 0xFFF) {
-			printf("ERR editor_cmds.c / brushtype is wrong (255 - 4095)\n");
+		if (c < 0 || c > 0xFFF) {
+			printf("ERR editor_cmds.c / brushtype is wrong (0 - 4095)\n");
 			return;
 		}
 		memseti("e_brushtype", c);

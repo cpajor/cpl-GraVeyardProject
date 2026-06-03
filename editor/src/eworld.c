@@ -5,15 +5,9 @@
 int currentSeed;
 
 wchunk_t* w_chunks;
-int w_chunksSize;
-
-pos_t wpos(int x, int y) {
-	return (pos_t) { x, y };
-}
-
-char wposcmp(pos_t b1, pos_t b2) {
-	return b1.x == b2.x && b1.y == b2.y;
-}
+size_t w_chunksSize;
+int w_palette;
+pos_t w_start;
 
 int wSeedNext(int in) {
 	return (in * 11) % CPL_MAGIC1;
