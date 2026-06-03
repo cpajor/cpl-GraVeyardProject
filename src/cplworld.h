@@ -6,6 +6,6 @@ pos_t wpos(int x, int y);
 
 char wposcmp(pos_t b1, pos_t b2);
 
-edict_t* wgetEdict(int x);
+edict_t* ewgetEdict(int pos);
 
 #endif

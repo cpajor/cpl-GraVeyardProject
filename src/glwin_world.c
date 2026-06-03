@@ -29,12 +29,14 @@ void cpl_drawWorld() {
 	glTranslatef(0, w_camY, 0);
 	//
 	for (int i = 0; i < 45; i++) {
-		//if (i % 2 == 0) continue; // DEBUG
-
-		const edict_t* ed = wgetEdict(i + (w_camX / 40));
-		if (!ed) continue; 
+		const edict_t* ed = ewgetEdict(i + (w_camX / 40));
+		if (!ed) continue;
 		for (int j = 0; j < 64; j++) {
 			edict_t e = ed[j];
+
+			glColor3f(0.7, 0.7, 0.7);
+			if (e.typeBack > 0) cpl_drawTile(e.typeBack, (i * 40) - (w_camX % 40), -j * 40);
+			glColor3f(1, 1, 1);
 			if (e.type > 0) cpl_drawTile(e.type, (i * 40) - (w_camX % 40), -j * 40);
 		}
 	}
