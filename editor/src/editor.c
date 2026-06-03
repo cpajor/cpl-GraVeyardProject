@@ -23,6 +23,7 @@ extern void cplthr_init(); // cpl_thread.cpp
 char _cmd_show = 0;
 char* _cmd_buf;
 char* _editor_console;
+CTICK _lastTick = 0;
 
 CTICK _game_uptime = 0;
 
@@ -52,6 +53,7 @@ void postkeyboard(char key[11]) {
 		if (key[CKEY_ALT]) {
 			int c = memgeti("e_brushtype");
 			if (c > 100) memseti("e_brushtype", c - 1);
+
 			return;
 		}
 		w_curr.x--;
@@ -60,6 +62,7 @@ void postkeyboard(char key[11]) {
 		if (key[CKEY_ALT]) {
 			int c = memgeti("e_brushtype");
 			memseti("e_brushtype", c + 1);
+
 			return;
 		}
 		w_curr.x++;
@@ -80,7 +83,7 @@ void keyboard_key(int key, char state) {
 	if (_cmd_show) return;
 
 	keys[key] = !state;
-	//
+
 	postkeyboard(keys);
 }
 

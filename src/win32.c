@@ -48,5 +48,5 @@ void win32c_init() {
     SystemParametersInfo(SPI_GETTOGGLEKEYS, sizeof(TOGGLEKEYS), &g_StartupToggleKeys, 0);
     SystemParametersInfo(SPI_GETFILTERKEYS, sizeof(FILTERKEYS), &g_StartupFilterKeys, 0);
 
-    win32c_changeKeyExtra(0);
+    win32c_changeKeyExtra(1);
 }

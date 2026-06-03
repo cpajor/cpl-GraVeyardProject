@@ -366,49 +366,67 @@ LONG WINAPI _rnd_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 	if (uMsg == WM_SETFOCUS) {
 		ShowCursor(0);
 	}
-	unsigned int key = wParam;
-	if (uMsg == WM_KEYDOWN || uMsg == WM_SYSKEYDOWN) {
-		//lctrl
-		if (key == VK_LCONTROL && !(lParam & (1 << 24))) keyboard_key(CKEY_ATTACK, 0);
-		// alt
-		if (GetAsyncKeyState(VK_LMENU) & 0x8000) keyboard_key(CKEY_ALT, 0);
-		// spacebar
-		if (key == VK_SPACE) keyboard_key(CKEY_JUMP, 0);
-		//lshift
-		if (key == VK_LSHIFT) keyboard_key(CKEY_ATTACK2, 0);
-		// esc
-		if (key == VK_ESCAPE) keyboard_key(CKEY_ESC, 0);
-		// enter
-		if (key == VK_RETURN) keyboard_key(CKEY_ENTER, 0);
-		if (key == VK_UP) keyboard_key(CKEY_UP, 0);
-		if (key == VK_DOWN) keyboard_key(CKEY_DOWN, 0);
-		if (key == VK_LEFT) keyboard_key(CKEY_LEFT, 0);
-		if (key == VK_RIGHT) keyboard_key(CKEY_RIGHT, 0);
+
+	if (uMsg == WM_INPUT) {
+		UINT size = 0;
+
+		GetRawInputData((HRAWINPUT)lParam, RID_INPUT, NULL, &size, sizeof(RAWINPUTHEADER));
+
+		BYTE* buffer = malloc(size);
+
+		if (buffer) {
+			if (GetRawInputData((HRAWINPUT)lParam, RID_INPUT, buffer, &size, sizeof(RAWINPUTHEADER)) == size) {
+				RAWINPUT* raw = (RAWINPUT*)buffer;
+
+				if (raw->header.dwType == RIM_TYPEKEYBOARD) {
+					USHORT key = raw->data.keyboard.VKey;
+					USHORT flags = raw->data.keyboard.Flags;
+
+					if (flags & RI_KEY_BREAK) {
+						if (key == VK_MENU) keyboard_key(CKEY_ALT, 1);
+						//lctrl
+						if (key == VK_LCONTROL && !(lParam & (1 << 24))) keyboard_key(CKEY_ATTACK, 1);
+						// spacebar
+						if (key == VK_SPACE) keyboard_key(CKEY_JUMP, 1);
+						//lshift
+						if (key == VK_LSHIFT) keyboard_key(CKEY_ATTACK2, 1);
+						// esc
+						if (key == VK_ESCAPE) keyboard_key(CKEY_ESC, 1);
+						// enter
+						if (key == VK_RETURN) keyboard_key(CKEY_ENTER, 1);
+						if (key == VK_UP) keyboard_key(CKEY_UP, 1);
+						if (key == VK_DOWN) keyboard_key(CKEY_DOWN, 1);
+						if (key == VK_LEFT) keyboard_key(CKEY_LEFT, 1);
+						if (key == VK_RIGHT) keyboard_key(CKEY_RIGHT, 1);
 #ifdef CPL_EDITOR
-		keyboard_extended(key, 0);
+						keyboard_extended(key, 1);
 #endif
-	}
-	if (uMsg == WM_KEYUP || uMsg == WM_SYSKEYUP) {
-		//lctrl
-		if (key == VK_LCONTROL && !(lParam & (1 << 24))) keyboard_key(CKEY_ATTACK, 1);
-		// alt
-		if (!(GetAsyncKeyState(VK_LMENU) & 0x8000)) keyboard_key(CKEY_ALT, 1);
-		// spacebar
-		if (key == VK_SPACE) keyboard_key(CKEY_JUMP, 1);
-		//lshift
-		if (key == VK_LSHIFT) keyboard_key(CKEY_ATTACK2, 1);
-		// esc
-		if (key == VK_ESCAPE) keyboard_key(CKEY_ESC, 1);
-		// enter
-		if (key == VK_RETURN) keyboard_key(CKEY_ENTER, 1);
-		if (key == VK_UP) keyboard_key(CKEY_UP, 1);
-		if (key == VK_DOWN) keyboard_key(CKEY_DOWN, 1);
-		if (key == VK_LEFT) keyboard_key(CKEY_LEFT, 1);
-		if (key == VK_RIGHT) keyboard_key(CKEY_RIGHT, 1);
-	}
+					}
+					else {
+						if (key == VK_MENU) keyboard_key(CKEY_ALT, 0);
+						//lctrl
+						if (key == VK_LCONTROL && !(lParam & (1 << 24))) keyboard_key(CKEY_ATTACK, 0);
+						// spacebar
+						if (key == VK_SPACE) keyboard_key(CKEY_JUMP, 0);
+						//lshift
+						if (key == VK_LSHIFT) keyboard_key(CKEY_ATTACK2, 0);
+						// esc
+						if (key == VK_ESCAPE) keyboard_key(CKEY_ESC, 0);
+						// enter
+						if (key == VK_RETURN) keyboard_key(CKEY_ENTER, 0);
+						if (key == VK_UP) keyboard_key(CKEY_UP, 0);
+						if (key == VK_DOWN) keyboard_key(CKEY_DOWN, 0);
+						if (key == VK_LEFT) keyboard_key(CKEY_LEFT, 0);
+						if (key == VK_RIGHT) keyboard_key(CKEY_RIGHT, 0);
 #ifdef CPL_EDITOR
-	keyboard_extended(key, 1);
+						keyboard_extended(key, 0);
 #endif
+					}
+				}
+			}
+		}
+	}
+
 	return DefWindowProc(hWnd, uMsg, wParam, lParam);
 }
  
@@ -437,6 +455,14 @@ void _rnd_init() {
 	pfd.cDepthBits = 16;
 	pfd.cStencilBits = 8;
 	pfd.iLayerType = PFD_MAIN_PLANE;
+
+	RAWINPUTDEVICE rid;
+	rid.usUsagePage = 0x01;
+	rid.usUsage = 0x06; // keyboard
+	rid.dwFlags = RIDEV_INPUTSINK;// | RIDEV_NOHOTKEYS;
+	rid.hwndTarget = c_hWnd;
+	
+	RegisterRawInputDevices(&rid, 1, sizeof(rid));
 
 	int pf = ChoosePixelFormat(c_hDC, &pfd);
 	SetPixelFormat(c_hDC, pf, &pfd);

@@ -142,7 +142,7 @@ void _mem_init() {
 	_cpl_memory[0] = (mem_t){ "version", 1, 0, 0  };
 	_cpl_memory[1] = (mem_t){ "name", 0, "cp-L", 0};
 	for (int i = 2; i < _CPL_MEMORY_MAX; i++) {
-		_cpl_memory[i] = (mem_t){ "_", 0, 0, 0 };
+		_cpl_memory[i] = (mem_t) { "_", 0, 0, 0 };
 	}
 	//
 

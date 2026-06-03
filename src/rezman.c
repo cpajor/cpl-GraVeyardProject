@@ -19,4 +19,5 @@ void rezLoadReg() {
 	memsett("claw_1", y1txCIG());
 	cclaw_tex[1] = memget("claw_1");
 
+
 }
