@@ -58,11 +58,18 @@ typedef struct wchunk_s {
 	edict_t edicts[64];
 } wchunk_t;
 
+typedef struct entity_s {
+	pos_t pos;
+	int type;
+	int uid;
+} entity_t; 
+
 typedef struct wheader_s {
 	char version;
 	size_t edictsize;
 	int palette;
 	pos_t start;
+	int entitysize;
 } wheader_t;
 
 typedef struct params_s {

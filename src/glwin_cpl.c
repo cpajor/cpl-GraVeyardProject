@@ -390,7 +390,7 @@ LONG WINAPI _rnd_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 					if (flags & RI_KEY_BREAK) {
 						if (key == VK_MENU) keyboard_key(CKEY_ALT, 1);
 						//lctrl
-						if (key == VK_LCONTROL && !(lParam & (1 << 24))) keyboard_key(CKEY_ATTACK, 1);
+						if (key == VK_CONTROL) keyboard_key(CKEY_ATTACK, 1);
 						// spacebar
 						if (key == VK_SPACE) keyboard_key(CKEY_JUMP, 1);
 						//lshift
@@ -410,7 +410,7 @@ LONG WINAPI _rnd_WindowProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
 					else {
 						if (key == VK_MENU) keyboard_key(CKEY_ALT, 0);
 						//lctrl
-						if (key == VK_LCONTROL && !(lParam & (1 << 24))) keyboard_key(CKEY_ATTACK, 0);
+						if (key == VK_CONTROL) keyboard_key(CKEY_ATTACK, 0);
 						// spacebar
 						if (key == VK_SPACE) keyboard_key(CKEY_JUMP, 0);
 						//lshift
@@ -511,7 +511,6 @@ void _rnd_thread() {
 	_rnd_destroy();
 }
 
-
 /*
 	cp-L 4 color palette
 
@@ -522,7 +521,7 @@ void _rnd_thread() {
 
 */
 
-unsigned char chars_data[] = {
+uchar chars_data[] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,

@@ -23,7 +23,7 @@ extern void startgui_init(); // guistart.c
 extern char player_playing;
 
 CTICK _game_uptime = 0;
-CTICK _game_lastUp = 0;
+CTICK _game_worldTime = 0;
 
 CTICK cplTicks() {
 	return _game_uptime;
@@ -34,7 +34,6 @@ void _game_thread(int id) {
 	while (c_state) {
 		CTICK now = GetTickCount64();
 		while (now >= nextTick) {
-			//game_tick();
 			
 			_game_uptime++;
 			nextTick += 50;
@@ -43,11 +42,14 @@ void _game_thread(int id) {
 }
 
 void _game_invokeThread(int id) {
+	CTICK nextTick = GetTickCount64();
 	while (c_state) {
-		if (_game_lastUp < cplTicks()) {
-			_game_lastUp = cplTicks();
+		CTICK now = GetTickCount64();
+		while (now >= nextTick) {
 			if (player_playing)
 				caworld_tick();
+			_game_worldTime++;
+			nextTick += 10;
 		}
 	}
 }
@@ -88,4 +90,10 @@ void keyboard_key(int key, char state) {
 
 void cpl_inputRepeat(char repeating) {
 	_grepeat = repeating;
+}
+
+char cpl_ginput(char ckey) {
+	if (ckey >= 0 && ckey < 11) {
+		return _ginput[ckey];
+	}
 }

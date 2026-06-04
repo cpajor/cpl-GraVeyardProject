@@ -6,9 +6,10 @@
 #include <stdio.h>
 
 extern void player_tick();
-
-extern char _ginput[11];
+extern char player_direction;
 extern pos_t player_pos;
+extern char player_walk;
+extern char player_attacking;
 
 int currentSeed;
 
@@ -67,19 +68,29 @@ char player_canMove(int x, int y) {
 }
 
 void caworld_tick() {
-	if (_ginput[CKEY_LEFT]) {
-		if (player_canMove(player_pos.x - 10, player_pos.y)) {
-			player_pos.x -= 10;
-			player_updateView();
+	player_updateView();
+	char walk = 0;
+	if (cpl_ginput(CKEY_LEFT)) {
+		player_direction = 1;
+		if (player_attacking == 0) {
+			walk = 1;
+			if (player_canMove(player_pos.x - 2, player_pos.y)) {
+				player_pos.x -= 2;
+			}
 		}
 	}
-	if (_ginput[CKEY_RIGHT]) {
-		if (player_canMove(player_pos.x + 10, player_pos.y)) {
-			player_pos.x += 10;
-			player_updateView();
+	if (cpl_ginput(CKEY_RIGHT)) {
+		player_direction = 0;
+		if (player_attacking == 0) {
+			walk = 1;
+			if (player_canMove(player_pos.x + 2, player_pos.y)) {
+				player_pos.x += 2;
+			}
 		}
 	}
+	player_walk = walk;
 	player_tick();
+	player_updateView(); // 2nd for smooth
 }
 
 char caworld_onground() {

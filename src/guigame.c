@@ -15,7 +15,11 @@ char player_playing = 0;
 void gamegui_key(char key[11]) {
 
 	if (key[CKEY_JUMP] && caworld_onground()) {
-		player_yFactor1 = 30;
+		player_yFactor1 = 6.7;
+	}
+
+	if (key[CKEY_ATTACK]) {
+		player_attack();
 	}
 }
 

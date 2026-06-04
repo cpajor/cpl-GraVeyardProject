@@ -43,6 +43,6 @@ void cpl_drawWorld();
 
 void cpl_drawSpecial(char type, int x, int y);
 
-void cpl_drawClaw(int x, int y, unsigned short type);
+void cpl_drawClaw(int x, int y, int type);
 
 #endif // !VID_H

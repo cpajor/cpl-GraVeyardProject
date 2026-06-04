@@ -26,7 +26,11 @@ char player_canMove(int x, int y);
 
 void player_updateView();
 
+int player_animState();
+
 char caworld_onground();
+
+void player_attack();
 
 #endif // !CPL_EDITPR
 #endif
