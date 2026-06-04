@@ -11,6 +11,8 @@ typedef void (*thr_func_t)(int id);
 #define CPL_MAX_THREADS 4
 #endif
 
+// 0 - game tick
+// 1 - game invoke
 void cplthr_set(char id, thr_func_t func);
 
 void cplasync(voidfunc_t t, params_t* par);

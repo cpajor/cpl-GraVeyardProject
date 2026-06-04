@@ -2,6 +2,8 @@
 #include "cplthread.h"
 #include "cplaudio.h"
 #include "ginput.h"
+#include "cplworld.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -18,21 +20,34 @@ extern void rezLoadReg(); // rezman.c
 extern void mainmenu_init(); // guimainmenu.c
 extern void startgui_init(); // guistart.c
 
+extern char player_playing;
+
 CTICK _game_uptime = 0;
+CTICK _game_lastUp = 0;
 
 CTICK cplTicks() {
 	return _game_uptime;
 }
 
 void _game_thread(int id) {
-	DWORD nextTick = GetTickCount64();
+	CTICK nextTick = GetTickCount64();
 	while (c_state) {
-		DWORD now = GetTickCount64();
+		CTICK now = GetTickCount64();
 		while (now >= nextTick) {
 			//game_tick();
 			
 			_game_uptime++;
-			nextTick += 100;
+			nextTick += 50;
+		}
+	}
+}
+
+void _game_invokeThread(int id) {
+	while (c_state) {
+		if (_game_lastUp < cplTicks()) {
+			_game_lastUp = cplTicks();
+			if (player_playing)
+				caworld_tick();
 		}
 	}
 }
@@ -42,11 +57,12 @@ void StartGame() {
 	//cpl_fullscreen(1);
 	rezLoadReg();
 
-	cplgui_setInit(startgui_init);
-	//cplgui_setInit(mainmenu_init);
+	//cplgui_setInit(startgui_init);
+	cplgui_setInit(mainmenu_init);
 
 	cplgui_init();
 	cplthr_set(0, _game_thread);
+	cplthr_set(1, _game_invokeThread);
 	_rnd_thread();
 }
 
@@ -59,15 +75,6 @@ char _grepeat = 0;
 void keyboard_key(int key, char state) {
 	_ginput[key] = !state;
 	//
-	if (_ginput[CKEY_ENTER]) {
-
-	}
-	if (_ginput[CKEY_UP]) {
-
-	}
-	if (_ginput[CKEY_DOWN]) {
-
-	}
 
 	if (!_grepeat) {
 		if (!state) {

@@ -27,6 +27,7 @@ void cpl_drawConNoColorStringN(char* c, int x, int y, int N);
 void cpl_drawConChar(char c, int x, int y);
 void cpl_drawConNoColorChar(char c, int x, int y);
 
+void cpl_resetOrtho();
 int cpl_rWidth();
 int cpl_rHeight();
 

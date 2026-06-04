@@ -221,6 +221,15 @@ void txEnd() {
 	glBindTexture(GL_TEXTURE_2D, -1);
 }
 
+void cpl_resetOrtho() {
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(0, c_wWidth, c_wHeight, 0, -1, 1);
+
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
+
 void _setup2d() {
 	if (c_wFullscreen) {
 		glViewport(
@@ -234,12 +243,8 @@ void _setup2d() {
 	}
 	glClearColor(0, 0, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glOrtho(0, c_wWidth, c_wHeight, 0, -1, 1);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
+	
+	cpl_resetOrtho();
 
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

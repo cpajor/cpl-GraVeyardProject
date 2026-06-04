@@ -28,7 +28,7 @@ void startgui_draw() {
 	if (startgui_uptime < 0) {
 		startgui_uptime = cplTicks();
 	}
-	if (startgui_uptime < cplTicks() && __frame < 90) {
+	if (startgui_uptime + 1 < cplTicks() && __frame < 90) {
 		startgui_uptime = cplTicks();
 		__frame++;
 	}

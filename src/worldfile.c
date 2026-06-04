@@ -8,11 +8,12 @@ extern wchunk_t* w_chunks;
 extern size_t w_chunksSize;
 extern int w_palette;
 extern char** w_visible;
+extern pos_t w_start;
 
-void cworld_load(char* wname) {
+void caworld_load(char* wname) {
 	FILE* fp = fopen(wname, "rb");
 	if (!fp) {
-		printf("ERR eworldfile.c / fopen\n");
+		printf("ERR worldfile.c / fopen\n");
 		return;
 	}
 
@@ -20,8 +21,8 @@ void cworld_load(char* wname) {
 	fread(&header, sizeof(wheader_t), 1, fp);
 
 	w_chunksSize = header.edictsize;
-	
 	w_palette = header.palette;
+	w_start = header.start;
 
 	w_chunks = malloc(sizeof(wchunk_t) * w_chunksSize);
 

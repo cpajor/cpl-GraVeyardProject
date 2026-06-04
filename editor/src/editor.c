@@ -7,9 +7,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-extern pos_t w_curr;
 extern int c_state;
 extern char w_mode;
+extern int w_currX;
+extern int w_currY;
 
 extern void applyBrush();
 extern void _mem_init(); // mem.c
@@ -62,7 +63,7 @@ void postkeyboard(char key[11]) {
 
 			return;
 		}
-		w_curr.x--;
+		w_currX--;
 	}
 	if (key[CKEY_RIGHT]) {
 		if (key[CKEY_ALT]) {
@@ -74,13 +75,13 @@ void postkeyboard(char key[11]) {
 
 			return;
 		}
-		w_curr.x++;
+		w_currX++;
 	}
 	if (key[CKEY_UP]) {
-		w_curr.y++;
+		w_currY++;
 	}
 	if (key[CKEY_DOWN]) {
-		w_curr.y--;
+		w_currY--;
 	}
 }
 
@@ -117,12 +118,6 @@ void keyboard_extended(unsigned int key, char state) {
 		if (strlen(_cmd_buf) < 255) {
 			sprintf(_cmd_buf, "%s%c", _cmd_buf, key);
 		} 
-	}
-	if (key == 'S' && keys[CKEY_ATTACK]) { // S
-		cworld_save();
-	}
-	if (key == 'T' && keys[CKEY_ATTACK]) { // T
-		cworld_load();
 	}
 	if (key == VK_TAB) {
 		w_mode = !w_mode;
