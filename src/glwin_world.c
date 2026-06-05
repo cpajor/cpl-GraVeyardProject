@@ -10,22 +10,23 @@ extern char player_direction;
 int w_camX = 0;
 int w_camY = 0;
 
-
 // tile size : 40x40
 void cpl_drawTile(int type, int x, int y) {
 	if (type >= 100 && type < 200) {
 		tex_t tex = memgett("level1_0");
-		if (type < 111) {
-			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type), 0, 0.1, 0.25);
+		if (type < 110) {
+			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type - 100), 0, 0.1, 0.25);
 		}
-		if (type > 110 && type < 121) {
-			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type), 0.25, 0.1, 0.25);
+		if (type >= 110 && type < 120) {
+			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type - 110), 0.25, 0.1, 0.25);
+			if (type == 110)
+				cpl_drawSpecial(CPLSPEC_FIRE, x - 20, y - 20);
 		}
-		if (type > 120 && type < 131) {
-			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type), 0.5, 0.1, 0.25);
+		if (type >= 120 && type < 130) {
+			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type - 120), 0.5, 0.1, 0.25);
 		}
-		if (type > 130 && type < 141) {
-			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type), 0.75, 0.1, 0.25);
+		if (type >= 130 && type < 140) {
+			cpl_rTexQuadOff(tex, x - 20, y - 20, 40, 40, 0.1 * (type - 130), 0.75, 0.1, 0.25);
 		}
 	}
 }
@@ -35,8 +36,8 @@ void cpl_drawWorld() {
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	int cw = cpl_rWidth() / 2;
-	int ch = cpl_rHeight() / 2;
+	int cw = (cpl_rWidth() / 2) * 0.5;
+	int ch = (cpl_rHeight() / 2) * 0.5;
 	
 	glOrtho(w_camX - cw, w_camX + cw, w_camY - ch, w_camY + ch, -1, 1);
 
@@ -62,7 +63,7 @@ void cpl_drawWorld() {
 				cpl_drawTile(e.typeBack, x, y);
 				glPopMatrix();
 			}
-			if (e.type >= 0) {
+			if (e.type > 0) {
 				glColor3f(1, 1, 1);
 				glPushMatrix();
 				glTranslatef(x, y, 0);
@@ -79,12 +80,14 @@ void cpl_drawWorld() {
 	cpl_resetOrtho();
 
 	glPushMatrix();
+	glTranslatef((cpl_rWidth() / 2), (cpl_rHeight() / 2), 0);
+	glScalef(2, 2, 1);
 	if (player_direction) {
-		glTranslatef((cpl_rWidth() / 2), (cpl_rHeight() / 2), 0);
 		glScalef(-1, 1, 1);
-		glTranslatef(-(cpl_rWidth() / 2), -(cpl_rHeight() / 2), 0);
 	}	
-	cpl_drawClaw((cpl_rWidth() / 2), (cpl_rHeight() / 2), player_animState());
+	glTranslatef(-(cpl_rWidth() / 2), -(cpl_rHeight() / 2), 0);
+
+	cpl_drawClaw((cpl_rWidth() / 2), (cpl_rHeight() / 2));
 
 	glPopMatrix();
 

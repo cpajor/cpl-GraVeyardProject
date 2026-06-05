@@ -40,9 +40,10 @@ void cpl_drawWorld();
 // etc
 
 #define CPLSPEC_COIN 10
+#define CPLSPEC_FIRE 11
 
 void cpl_drawSpecial(char type, int x, int y);
 
-void cpl_drawClaw(int x, int y, int type);
+void cpl_drawClaw(int x, int y);
 
 #endif // !VID_H

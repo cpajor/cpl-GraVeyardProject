@@ -61,7 +61,6 @@ typedef struct wchunk_s {
 typedef struct entity_s {
 	pos_t pos;
 	int type;
-	int uid;
 } entity_t; 
 
 typedef struct wheader_s {

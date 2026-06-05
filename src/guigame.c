@@ -9,18 +9,23 @@
 #include <string.h>
 
 extern float player_yFactor1;
+extern CTICK player_yFactor2;
 
 char player_playing = 0;
 
 void gamegui_key(char key[11]) {
-
-	if (key[CKEY_JUMP] && caworld_onground()) {
+	if (key[CKEY_JUMP] && caworld_onground() && player_yFactor2 < cplTicks()) {
 		player_yFactor1 = 6.7;
 	}
 
 	if (key[CKEY_ATTACK]) {
 		player_attack();
 	}
+
+	if (key[CKEY_ATTACK2]) {
+		player_attack();
+	}
+	
 }
 
 void gamegui_draw() {
@@ -32,6 +37,6 @@ void gamegui_init() {
 	player_init();
 	cplgui_setIdle(gamegui_draw);
 	cplgui_setInput(gamegui_key);
-	cpl_inputRepeat(1);
+	cpl_inputRepeat(0);
 	player_playing = 1;
 }

@@ -12,7 +12,7 @@ extern char player_walk;
 extern char player_attacking;
 
 int currentSeed;
-
+CTICK w_upticks = 0;
 wchunk_t* w_chunks;
 size_t w_chunksSize;
 int w_palette; 
@@ -47,9 +47,20 @@ char player_checkTile(int type) {
 	if (type == 100) return 1;
 	if (type == 110) return 1;
 
+	if (type == 106) return 2;
+	if (type == 107) return 2;
+	if (type == 115) return 2;
+	if (type == 119) return 2;
+
+	if (type == 108) return 3;
+	if (type == 109) return 3;
+	if (type == 118) return 3;
+
 
 	return 0;
 }
+
+
 
 char player_canMove(int x, int y) {
 	int left = (x - 40) / 40;
@@ -60,7 +71,23 @@ char player_canMove(int x, int y) {
 
 	for (int tx = left; tx <= right; tx++) {
 		for (int ty = top; ty <= bottom; ty++) {
-			if (player_checkTile(caworld_getType(tx, ty))) return 0;
+			int t = player_checkTile(caworld_getType(tx, ty));
+
+			int tileX = tx * 40;
+
+			if (t == 1) return 0;
+
+			if (t == 2) {
+				int solidL = tileX;
+				int solidR = tileX + 20;
+
+				if ((x + 40) > solidL && (x - 40) < solidR) return 0;
+			}
+
+			if (t == 3) {
+
+				if ((x + 40) > ((tx * 40) + 30) && (x - 40) < ((tx * 40) + 40)) return 0;
+			}
 		}
 	}
 
@@ -68,11 +95,12 @@ char player_canMove(int x, int y) {
 }
 
 void caworld_tick() {
+	w_upticks++;
 	player_updateView();
 	char walk = 0;
 	if (cpl_ginput(CKEY_LEFT)) {
 		player_direction = 1;
-		if (player_attacking == 0) {
+		if (player_attacking == 0 || !caworld_onground()) {
 			walk = 1;
 			if (player_canMove(player_pos.x - 2, player_pos.y)) {
 				player_pos.x -= 2;
@@ -81,7 +109,7 @@ void caworld_tick() {
 	}
 	if (cpl_ginput(CKEY_RIGHT)) {
 		player_direction = 0;
-		if (player_attacking == 0) {
+		if (player_attacking == 0 || !caworld_onground()) {
 			walk = 1;
 			if (player_canMove(player_pos.x + 2, player_pos.y)) {
 				player_pos.x += 2;
