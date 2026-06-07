@@ -40,7 +40,11 @@ void csnd_init() {
 	hr = g_xaudio->lpVtbl->CreateMasteringVoice(g_xaudio, &g_master, XAUDIO2_DEFAULT_CHANNELS, XAUDIO2_DEFAULT_SAMPLERATE, 0, 0, 0, AudioCategory_GameEffects);
 }
 
-void csnd_playsoundc(csound_t snd, csoundcallback_t* callback) {
+
+void csnd_playsoundc(csound_t snd, csoundcallback_t* callback) {}
+
+
+void csnd_playsoundc2(csound_t snd, csoundcallback_t* callback) {
 	if (snd.dataSize == 0) return;
 
 	IXAudio2SourceVoice* voice = 0;

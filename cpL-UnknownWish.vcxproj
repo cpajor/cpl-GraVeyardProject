@@ -37,6 +37,7 @@
     <ClCompile Include="src\glwin_world.c" />
     <ClCompile Include="src\guigame.c" />
     <ClCompile Include="src\guimainmenu.c" />
+    <ClCompile Include="src\guioptions.c" />
     <ClCompile Include="src\guistart.c" />
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\mem.c" />
