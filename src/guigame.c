@@ -22,7 +22,7 @@ void gamegui_key(char key[11]) {
 		player_attack();
 	}
 
-	if (key[CKEY_ATTACK2]) {
+	if (key[CKEY_ALT]) {
 		player_attack();
 	}
 	
