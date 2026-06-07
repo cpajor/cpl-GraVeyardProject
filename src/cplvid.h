@@ -27,6 +27,7 @@ void cpl_drawConNoColorStringN(char* c, int x, int y, int N);
 void cpl_drawConChar(char c, int x, int y);
 void cpl_drawConNoColorChar(char c, int x, int y);
 
+void cpl_resetOrtho();
 int cpl_rWidth();
 int cpl_rHeight();
 
@@ -39,9 +40,10 @@ void cpl_drawWorld();
 // etc
 
 #define CPLSPEC_COIN 10
+#define CPLSPEC_FIRE 11
 
 void cpl_drawSpecial(char type, int x, int y);
 
-void cpl_drawClaw(int x, int y, unsigned short type);
+void cpl_drawClaw(int x, int y);
 
 #endif // !VID_H

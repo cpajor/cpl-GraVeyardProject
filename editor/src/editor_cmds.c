@@ -5,18 +5,22 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+extern pos_t w_curr;
+extern pos_t w_cur2;
+
 void cmd_callCmd(char* str) {
 	if (!strcmp(str, "EXIT")) {
 		exit(0);
 		return;
 	}
 	if (!strnstartswith(str, "NAME ", 5)) {
-		int len = strlen(str) - 4;
-		if (len < 5) {
+		int len = strlen(str) - 5;
+		if (len < 3) {
+			printf("ERR editor_cmds.c / worldname is too short!\n");
 			return; 
 		}
-		char* buf = (char*)malloc(len - 4);
-		memcpy(buf, str + 5, len - 4);
+		char* buf = malloc(len);
+		memcpy(buf, str + 5, len);
 		memsetc("e_wname", buf);
 		printf("INFO e_wname set to: %s\n", memgetc("e_wname"));
 		return;
@@ -26,20 +30,75 @@ void cmd_callCmd(char* str) {
 		if (len < 1) {
 			return;
 		}
-		int c = 1;
+		int c = 0;
 		CTRY {
 			c = atoi(str + 6);
-		} 
-		CCATCH {
-			printf("ERR editor_cmds.c / worldsize is wrong (1 - 64)\n");
-			return;
 		}
-		if (c > 64) {
-			printf("ERR editor_cmds.c / worldsize is wrong (1 - 64)\n");
+		CCATCH {}
+		if (c > CW_MAXCHUNKS || c < 20) {
+			printf("ERR editor_cmds.c / worldsize is wrong (20 - %i)\n", CW_MAXCHUNKS);
 			return;
 		}
 		memseti("e_wsize", c);
 		printf("INFO e_wsize set to: %i\n", memgeti("e_wsize"));
+		return;
+	}
+	if (!strnstartswith(str, "PALETTE ", 8)) {
+		int len = strlen(str) - 8;
+		if (len < 1) {
+			return;
+		}
+		int c = -1;
+		CTRY{
+			c = atoi(str + 8);
+		}
+		CCATCH{ c = -1;  }
+		if (c < 0) {
+			printf("ERR editor_cmds.c / worldpalette is wrong (0 is min, [4byte signed])\n");
+			return;
+		}
+		memseti("e_wpalette", c);
+		printf("INFO e_wpalette set to: %i\n", memgeti("e_wpalette"));
+		return;
+	}
+	if (!strnstartswith(str, "B ", 2)) {
+		int len = strlen(str) - 2;
+		if (len < 1) {
+			return;
+		}
+		int c = -1;
+		CTRY {
+			c = atoi(str + 2);
+		}
+		CCATCH {
+			c = -1;
+		}
+		if (c < 0 || c > 0xFFF) {
+			printf("ERR editor_cmds.c / brushtype is wrong (0 - 4095)\n");
+			return;
+		}
+		memseti("e_brushtype", c);
+		printf("INFO brushtype set to: %i\n", memgeti("e_brushtype"));
+		return;
+	}
+	if (!strnstartswith(str, "BRUSHTYPE ", 10)) {
+		int len = strlen(str) - 10;
+		if (len < 1) {
+			return;
+		}
+		int c = -1;
+		CTRY {
+			c = atoi(str + 10);
+		}
+		CCATCH {
+			c = -1;
+		}
+		if (c < 0 || c > 0xFFF) {
+			printf("ERR editor_cmds.c / brushtype is wrong (0 - 4095)\n");
+			return;
+		}
+		memseti("e_brushtype", c);
+		printf("INFO brushtype set to: %i\n", memgeti("e_brushtype"));
 		return;
 	}
 	if (!strcmp(str, "NEW")) {

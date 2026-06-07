@@ -3,27 +3,29 @@
 #include "cplaudio.h"
 #include "cplrez.h"
 #include "ginput.h"
+#include "cplworld.h"
 
 #include <stdio.h>
 #include <string.h>
 
-extern int w_camX;
-extern int w_camY;
+extern float player_yFactor1;
+extern CTICK player_yFactor2;
+
+char player_playing = 0;
 
 void gamegui_key(char key[11]) {
-	if (key[CKEY_LEFT]) {
-		w_camX -= 10;
-	}
-	if (key[CKEY_RIGHT]) {
-		w_camX += 10;
+	if (key[CKEY_JUMP] && caworld_onground() && player_yFactor2 < cplTicks()) {
+		player_yFactor1 = 6.7;
 	}
 
-	if (key[CKEY_UP]) {
-		w_camY += 10;
+	if (key[CKEY_ATTACK]) {
+		player_attack();
 	}
-	if (key[CKEY_DOWN]) {
-		w_camY -= 10;
+
+	if (key[CKEY_ALT]) {
+		player_attack();
 	}
+	
 }
 
 void gamegui_draw() {
@@ -31,7 +33,10 @@ void gamegui_draw() {
 }
 
 void gamegui_init() {
+	caworld_load("TEST2");
+	player_init();
 	cplgui_setIdle(gamegui_draw);
 	cplgui_setInput(gamegui_key);
-	cpl_inputRepeat(1);
+	cpl_inputRepeat(0);
+	player_playing = 1;
 }

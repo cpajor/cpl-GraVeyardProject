@@ -142,7 +142,7 @@ void _mem_init() {
 	_cpl_memory[0] = (mem_t){ "version", 1, 0, 0  };
 	_cpl_memory[1] = (mem_t){ "name", 0, "cp-L", 0};
 	for (int i = 2; i < _CPL_MEMORY_MAX; i++) {
-		_cpl_memory[i] = (mem_t){ "_", 0, 0, 0 };
+		_cpl_memory[i] = (mem_t) { "_", 0, 0, 0 };
 	}
 	//
 
@@ -160,7 +160,7 @@ char csetBit(char in, char pos, char v) {
 }
 
 void* y1get(const char* internalFile, int* out_filesize) {
-	// to improve - 'goto' is outdated (if works - do NOT touch it)
+	// to improve - 'goto' is outdated (but if works - do NOT touch it)
 	y1header_t header;
 	y1file_t yfile;
 
@@ -217,6 +217,18 @@ char* y1load(const char* inter) {
 	y1zero();
 	y1cbuf = y1get(inter, &y1csiz);
 	return y1cbuf;
+}
+
+pos_t wpos(int x, int y) {
+	return (pos_t) { x, y };
+}
+
+pos_t wcpy(pos_t pos) {
+	return (pos_t) { pos.x, pos.y };
+}
+
+char wposcmp(pos_t b1, pos_t b2) {
+	return b1.x == b2.x && b1.y == b2.y;
 }
 
 char strnstartswith(const char* str, const char* prefix, int n) {

@@ -146,6 +146,7 @@
     <ClCompile Include="..\src\cplthread.cpp" />
     <ClCompile Include="..\src\glwin_cpl.c" />
     <ClCompile Include="..\src\mem.c" />
+    <ClCompile Include="..\src\win32.c" />
     <ClCompile Include="src\editor.c" />
     <ClCompile Include="src\editor_cmds.c" />
     <ClCompile Include="src\eworld.c" />

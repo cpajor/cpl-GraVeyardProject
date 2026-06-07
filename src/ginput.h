@@ -26,4 +26,6 @@ when disabled, allows to press only one key input per tick (100ms)
  */
 void cpl_inputRepeat(char repeating);
 
+char cpl_ginput(char ckey);
+
 #endif

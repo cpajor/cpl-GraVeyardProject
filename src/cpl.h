@@ -13,6 +13,7 @@
  *	} CCATCH {
  *		in exception handling etc.
  *	}
+ * 
  */ 
 #define CTRY __try
 #define CCATCH __except (1)
@@ -24,6 +25,10 @@
 #define REZFILE "REZ.Y1"
 
 #define CW_VERSION 3
+#define CW_MAXCHUNKS 2048
+
+// fix
+typedef unsigned __int64 size_t;
 
 typedef struct y1header_s {
 	char id[4];
@@ -50,12 +55,20 @@ typedef struct edict_s {
 
 typedef struct wchunk_s {
 	pos_t pos;
-	edict_t edicts[256];
+	edict_t edicts[64];
 } wchunk_t;
+
+typedef struct entity_s {
+	pos_t pos;
+	int type;
+} entity_t; 
 
 typedef struct wheader_s {
 	char version;
-	int edictsize;
+	size_t edictsize;
+	int palette;
+	pos_t start;
+	int entitysize;
 } wheader_t;
 
 typedef struct params_s {
@@ -71,9 +84,6 @@ typedef void (*cplgui_idle_f)();
 #ifndef tex_t
 #define tex_t unsigned int
 #endif 
-
-//fix
-typedef unsigned __int64 size_t;
 
 // mem.c
 CPLMEM memget(char name[32]);
@@ -101,9 +111,16 @@ void* y1get(const char* internalFile, int* out_filesize);
 char* y1load(const char* inter);
 void y1zero();
 
-//
-CTICK cplTicks();
+pos_t wpos(int x, int y);
+
+pos_t wcpy(pos_t pos);
+
+char wposcmp(pos_t b1, pos_t b2);
+
 
 char strnstartswith(const char* str, const char* prefix, int n);
+
+//
+CTICK cplTicks();
 
 #endif

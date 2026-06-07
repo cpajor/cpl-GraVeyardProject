@@ -2,10 +2,35 @@
 #define CPLWORLD_H
 #include "cpl.h"
 
-pos_t wpos(int x, int y);
+edict_t* ewgetEdict(int pos);
 
-char wposcmp(pos_t b1, pos_t b2);
+void caworld_load(char* wname);
 
-edict_t* wgetEdict(int x);
+int caworld_getType(int x, int y);
 
+void caworld_setCollide(int x, int y, char collide);
+
+void caworld_tick();
+
+void caworld_camera(pos_t pos);
+
+// player
+
+#ifndef CPL_EDITOR
+
+void player_init();
+
+char player_checkTile(int type);
+
+char player_canMove(int x, int y); 
+
+void player_updateView();
+
+int player_animState();
+
+char caworld_onground();
+
+void player_attack();
+
+#endif // !CPL_EDITPR
 #endif
