@@ -115,5 +115,8 @@
     <ClCompile Include="src\glwin_world.c">
       <Filter>src\machine</Filter>
     </ClCompile>
+    <ClCompile Include="src\guioptions.c">
+      <Filter>src\game\gui\impl</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
