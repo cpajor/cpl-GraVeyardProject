@@ -10,7 +10,7 @@
 
 extern float player_yFactor1;
 extern CTICK player_yFactor2;
-
+extern void optionsgui_init();
 char player_playing = 0;
 
 void gamegui_key(char key[11]) {
@@ -25,7 +25,12 @@ void gamegui_key(char key[11]) {
 	if (key[CKEY_ALT]) {
 		player_attack();
 	}
+	if (key[CKEY_ESC]) {
 	
+	
+		cplgui_setInit(optionsgui_init);
+	}
+
 }
 
 void gamegui_draw() {
