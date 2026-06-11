@@ -68,3 +68,9 @@ rez/sound/ffprobe.exe
 rez/sound
 /rez/cig/incig
 /rez/cig/outcig
+*.c
+*.c
+*.vcxproj
+*.filters
+*.c
+*.c

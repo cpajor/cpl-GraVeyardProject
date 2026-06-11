@@ -26,9 +26,7 @@ void gamegui_key(char key[11]) {
 		player_attack();
 	}
 	if (key[CKEY_ESC]) {
-	
-	
-		cplgui_setInit(optionsgui_init);
+ 		cplgui_setInit(optionsgui_init);
 	}
 
 }
