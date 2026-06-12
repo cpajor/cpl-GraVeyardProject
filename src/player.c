@@ -11,7 +11,9 @@ extern wchunk_t* w_chunks;
 extern size_t w_chunksSize;
 extern pos_t w_start;
 extern CTICK w_upticks;
-
+extern float saved_x;
+extern float saved_y;
+extern char has_save;
 pos_t player_pos;
 float player_yFactor1;
 CTICK player_yFactor2;
@@ -120,7 +122,12 @@ int player_animState() {
 }
 
 void player_init() {
-	player_pos = wpos(w_start.x * 40, w_start.y * 40);
+	if (has_save) {
+		player_pos = wpos(saved_x, saved_y);
+	}
+	else {
+		player_pos = wpos(w_start.x * 40, w_start.y * 40);
+	}
 }
 
 void player_attack() {

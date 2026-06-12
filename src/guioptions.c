@@ -28,10 +28,8 @@ void optionsgui_key(char key[11]) {
 	}
 	if (key[CKEY_ENTER] && !showCredits1) {
 		if (mainsel1 == 0) {
-			
 		
-			
-			cplgui_setInit(gamegui_init);
+		gamegui_init();
 		
 		}
 		if (mainsel1 == 2) {
@@ -67,12 +65,17 @@ void optionsgui_draw() {
 	else {
 		
 
-		cpl_drawConString("PLAY", 56, hig);
-		cpl_drawConString("OPTIONS", 56, hig + 32);
-		cpl_drawConString("CREDITS", 56, hig + 64);
-		cpl_drawConString("QUIT", 56, hig + 96);
-		cpl_drawSpecial(CPLSPEC_COIN, 8, hig + (32 * mainsel1) - 8);
+	  glPushMatrix();
+    glScalef(2, 2, 1);
 
+    cpl_drawConString("PLAY", 56, hig);
+    cpl_drawConString("OPTIONS", 56, hig + 32);
+    cpl_drawConString("CREDITS", 56, hig + 64);
+    cpl_drawConString("QUIT", 56, hig + 96);
+
+    cpl_drawSpecial(CPLSPEC_COIN, 8, hig + (32 * mainsel1) - 8);
+
+    glPopMatrix();
 	}
 }
 
