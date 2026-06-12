@@ -8,7 +8,6 @@
 #include <string.h>
 extern void gameovergui_init();
 extern wchunk_t* w_chunks;
-extern size_t w_chunksSize;
 extern pos_t w_start;
 extern CTICK w_upticks;
 extern float saved_x;
@@ -121,32 +120,7 @@ void player_tick() {
 	}
 
 
-	CTICK spike_cd = 0;
 
-	for (int i = 0; i < w_chunksSize; i++) {
-
-		const edict_t* ed = ewgetEdict(i);
-		if (!ed) continue;
-
-		for (int j = 0; j < 64; j++) {
-
-			edict_t e = ed[j];
-
-			if (e.type == 110) { 
-
-				int ex = i * 40;
-				int ey = j * 40;
-
-				if (abs(player_pos.x - ex) < 20 &&
-					abs(player_pos.y - ey) < 20 &&
-					spike_cd < cplTicks()) {
-
-					player_hp -= 10;
-					spike_cd = cplTicks() + 30;
-				}
-			}
-		}
-	}
 }
 
 int player_animState() {
@@ -162,6 +136,7 @@ void player_init() {
 	else {
 		player_pos = wpos(w_start.x * 40, w_start.y * 40);
 	}
+	player_hp = 100;
 }
 
 void player_attack() {

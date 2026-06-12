@@ -10,7 +10,8 @@ extern char player_direction;
 extern pos_t player_pos;
 extern char player_walk;
 extern char player_attacking;
-
+extern int player_hp;
+extern void gameovergui_init();
 int currentSeed;
 CTICK w_upticks = 0;
 wchunk_t* w_chunks;
@@ -119,6 +120,17 @@ void caworld_tick() {
 	player_walk = walk;
 	player_tick();
 	player_updateView(); // 2nd for smooth
+
+	int fx = player_pos.x;
+	int fy = player_pos.y + 80;
+
+	int tx = fx / 40;
+	int ty = fy / 40;
+
+	if (caworld_getType(tx, ty) == 110) {
+		player_hp = 0;
+		gameovergui_init();
+	}
 }
 
 char caworld_onground() {

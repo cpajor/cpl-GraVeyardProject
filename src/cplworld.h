@@ -31,6 +31,7 @@ int player_animState();
 char caworld_onground();
 
 void player_attack();
-
+extern int player_hp;
+void gameovergui_init();
 #endif // !CPL_EDITPR
 #endif
