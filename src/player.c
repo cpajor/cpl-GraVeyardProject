@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+extern void gameovergui_init();
 extern wchunk_t* w_chunks;
 extern size_t w_chunksSize;
 extern pos_t w_start;
@@ -18,7 +18,8 @@ pos_t player_pos;
 float player_yFactor1;
 CTICK player_yFactor2;
 int player_anim;
-// 0 - right / 1 - left
+int player_hp = 100;
+;
 char player_direction = 0; 
 char player_walk = 0;
 char player_attacking = 0;
@@ -115,11 +116,44 @@ void player_tick() {
 		player_yFactor1 = 0;
 		player_jumping = 0;
 	}
+	if (player_hp <= 0) {
+		gameovergui_init();
+	}
+
+
+	CTICK spike_cd = 0;
+
+	for (int i = 0; i < w_chunksSize; i++) {
+
+		const edict_t* ed = ewgetEdict(i);
+		if (!ed) continue;
+
+		for (int j = 0; j < 64; j++) {
+
+			edict_t e = ed[j];
+
+			if (e.type == 110) { 
+
+				int ex = i * 40;
+				int ey = j * 40;
+
+				if (abs(player_pos.x - ex) < 20 &&
+					abs(player_pos.y - ey) < 20 &&
+					spike_cd < cplTicks()) {
+
+					player_hp -= 10;
+					spike_cd = cplTicks() + 30;
+				}
+			}
+		}
+	}
 }
 
 int player_animState() {
 	return player_anim;
 }
+
+
 
 void player_init() {
 	if (has_save) {

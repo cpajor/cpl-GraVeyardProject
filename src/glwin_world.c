@@ -6,7 +6,7 @@
 
 extern size_t w_chunksSize;
 extern char player_direction;
-
+extern int player_hp;
 int w_camX = 0;
 int w_camY = 0;
 
@@ -90,6 +90,38 @@ void cpl_drawWorld() {
 	cpl_drawClaw((cpl_rWidth() / 2), (cpl_rHeight() / 2));
 
 	glPopMatrix();
+	int max_hp = 100;
+
+	float p = (float)player_hp / (float)max_hp;
+	if (p < 0) p = 0;
+	if (p > 1) p = 1;
+
+	int x = 60;
+	int y =20;
+	int w = 200;
+	int h = 10;
+	// NAPIS HP
+	cpl_drawConString("HP", x - 50, y - 2);
+	// t³o
+	glColor3f(0, 0, 0);
+	glBegin(GL_QUADS);
+	glVertex2f(x, y);
+	glVertex2f(x + w, y);
+	glVertex2f(x + w, y + h);
+	glVertex2f(x, y + h);
+	glEnd();
+
+	// HP
+	glColor3f(1, 0, 0);
+	glBegin(GL_QUADS);
+	glVertex2f(x, y);
+	glVertex2f(x + (w * p), y);
+	glVertex2f(x + (w * p), y + h);
+	glVertex2f(x, y + h);
+	glEnd();
+
+	// reset koloru
+	glColor3f(1, 1, 1);
 
 }
 

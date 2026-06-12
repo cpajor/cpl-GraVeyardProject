@@ -118,5 +118,8 @@
     <ClCompile Include="src\guioptions.c">
       <Filter>src\game\gui\impl</Filter>
     </ClCompile>
+    <ClCompile Include="src\guigameover.c">
+      <Filter>src\game\gui\impl</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

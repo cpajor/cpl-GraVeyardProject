@@ -13,14 +13,15 @@ extern CTICK player_yFactor2;
 extern void optionsgui_init();
 
 extern pos_t player_pos;
-
+extern int player_hp;
 float saved_x = 0;
 float saved_y = 0;
 char has_save = 0;
-
+extern char show_gameover;
 char player_playing = 0;
 
 void gamegui_key(char key[11]) {
+	if (show_gameover) return;
 
 	if (key[CKEY_JUMP] && caworld_onground() && player_yFactor2 < cplTicks()) {
 		player_yFactor1 = 6.7;
@@ -36,16 +37,19 @@ void gamegui_key(char key[11]) {
 
 	if (key[CKEY_ESC]) {
 
+	
 		saved_x = player_pos.x;
 		saved_y = player_pos.y;
 		has_save = 1;
 
 		optionsgui_init();
 	}
+	
 }
 
 void gamegui_draw() {
 	cpl_drawWorld();
+	
 }
 
 void gamegui_init() {
