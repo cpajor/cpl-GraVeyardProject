@@ -31,8 +31,6 @@ void cpl_drawClaw(int x, int y) {
 		cpl_rTexQuadOff(cclaw_tex[2], x - 30, y - 60, 120, 80, 0, (type - 21) * 0.25, 1, 0.25);
 	}
 	if (type < 9 && type > 0) {
-		glColor3f(1, 1, 1);
-		cpl_rColorQuad(x - 30, y - 60, 60, 80);
 		cpl_rTexQuadOff(cclaw_tex[0], x - 30, y - 60, 60, 80, 0, (type - 1) * 0.125, 1, 0.125);
 	}
 	if (type > 9 && type < 21) {
