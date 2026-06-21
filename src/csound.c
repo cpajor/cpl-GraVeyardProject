@@ -16,11 +16,10 @@ void csnd_playsound(const csound snd) {
 	 * https://pl.wikipedia.org/wiki/WAV
 	 * Author note:
 	 *
-	 * win32 api (mmsystem) ma wbudowany loader i player .WAV, zanim sie dowiedzialem o tym, pisalem, potem cala robota poszla w dupe, glownie dlatego, ze thread postanawial robic memory leak dla zabawy
-	 * po uzyciu tego kodu co jest i sprawdzeniu ze wszystko dziala stwierdzilem ze pierdole to, gdyz:
+	 * win32 api (mmsystem) ma wbudowany loader i player .WAV, zanim sie dowiedzialem o tym, pisalem, potem cala robota poszla w ****, glownie dlatego, ze thread postanawial robic memory leak dla zabawy
+	 * po uzyciu tego kodu co jest i sprawdzeniu ze wszystko dziala stwierdzilem ze ******** to, gdyz:
 	 * - pisalem 3 razy od zera loader WAV.
-	 * - spedzilem cale noce nad naprawianiem jebanego memory leaku
-	 * - SIX SEVEM
+	 * - spedzilem cale noce nad naprawianiem ******** memory leaku
 	 *
 }
  
